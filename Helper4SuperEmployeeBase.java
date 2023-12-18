@@ -15,9 +15,11 @@ import java.util.Scanner;
 import javax.security.sasl.SaslServer;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import Lin.library.enummenu.Buttons4UniversalProcess_MenuOption;
 import Lin.library.filestream.ReadFileExample;
 import Lin.payablesys.employeetype.BasePlusCommissionEmployee;
 import Lin.payablesys.employeetype.CommissionEmployee;
@@ -26,6 +28,7 @@ import Lin.payablesys.employeetype.HourlyEmployee;
 import Lin.payablesys.employeetype.SalariedEmployee;
 import Lin.payablesys.employeetype.earningbook.EmployeeBaseBook;
 import Lin.polymorphism.employee.frame.*;
+import Lin.polymorphism.employee.menuoption.EarningLevelEnum1;
 import Lin.polymorphism.employee.menuoption.EmployeeRecordIndices;
 
 public class Helper4SuperEmployeeBase {
@@ -121,7 +124,7 @@ public class Helper4SuperEmployeeBase {
 		employeeBook = frameEmployee.employeeBook;
 	}
 
-	public Helper4SuperEmployeeBase(lo.polymorphism.employee.interfaceframe.EmployeeBaseJFrame employeeBaseJFrame2) {
+	public Helper4SuperEmployeeBase(Lin.polymorphism.employee.frame.EmployeeBaseJFrame_V0 employeeBaseJFrame2) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -146,40 +149,40 @@ public class Helper4SuperEmployeeBase {
 	 */
 	public void setupDistribution4WageLevels() {
 		// ...
-		frameEmployee.lblALowerThreshold.setText("" + EarningLevelEnum.LevelA.getValue());
-		frameEmployee.lblBUpperThreshold.setText("" + EarningLevelEnum.LevelA.getValue());
-		frameEmployee.lblBLowerThreshold.setText("" + EarningLevelEnum.LevelB.getValue());
-		frameEmployee.lblCUpperThreshold.setText("" + EarningLevelEnum.LevelB.getValue());
+		frameEmployee.lblALowerThreshold.setText("" + EarningLevelEnum1.LevelA.getValue());
+		frameEmployee.lblBUpperThreshold.setText("" + EarningLevelEnum1.LevelA.getValue());
+		frameEmployee.lblBLowerThreshold.setText("" + EarningLevelEnum1.LevelB.getValue());
+		frameEmployee.lblCUpperThreshold.setText("" + EarningLevelEnum1.LevelB.getValue());
 		// ...
 		frameEmployee.lblUnit
-				.setText("" + EarningLevelEnum.UNIT.getTypeValue() + " (" + EarningLevelEnum.UNIT.getValue() + ")");
+				.setText("" + EarningLevelEnum1.UNIT.getLevelType() + " (" + EarningLevelEnum1.UNIT.getValue() + ")");
 	}
 
 	/**
 	 * prepare Basic Profile Using pre-Check.
 	 */
 	public void prepareBasicProfileUsingCheck() {
-		checkProfile = validationNumber_GUI.checkStringNotEmpty(frameEmployee.txtFieldCN.getText(),
+		checkProfile = validationNumber_GUI.checkStringNotEmpty(frameEmployee.textField.getText(),
 				EmployeeRecordIndices.COMPANY_NAME.getRecordIndexType());
 
 		JOptionPane.showMessageDialog(null, "employee=" + frameEmployee.getClass());
 
 		if (!checkProfile)
-			frameEmployee.txtFieldCN.setText("");
+			frameEmployee.textField.setText("");
 
 		if (checkProfile)
-			checkProfile = validationNumber_GUI.checkNumberValueByComparing_1flag(frameEmployee.txtFieldEN.getText(),
+			checkProfile = validationNumber_GUI.checkNumberValueByComparing_1flag(frameEmployee.textField_1.getText(),
 					EmployeeRecordIndices.EMPLOYEE_NO.getRecordIndexType(), 0, 1,
 					NumberTypeMenuOption.INT_NUMBER_TYPE.getValueIndex());
 
 		if (!checkProfile)
-			frameEmployee.txtFieldEN.setText("");
+			frameEmployee.textField_1.setText("");
 		// else EmployeeNo=validation_GUI.intValue;
 
 		// finally-> if everything is ready-> get all input data in profile area
 		if (checkProfile) {
-			CompanyName = frameEmployee.txtFieldCN.getText();
-			EmployeeNo = Integer.parseInt(frameEmployee.txtFieldEN.getText());
+			CompanyName = frameEmployee.textField.getText();
+			EmployeeNo = Integer.parseInt(frameEmployee.textField_1.getText());
 			// Open File can start from here (01Aug19)
 			frameEmployee.btnOpenFile.setEnabled(true);
 		}
@@ -196,31 +199,31 @@ public class Helper4SuperEmployeeBase {
 		 * frameEmployee.txtFieldSSN.getText(),
 		 * EmployeeRecordIndices.SSN.getRecordIndexType());
 		 */
-		checkRecord = validation_GUI.checkStringNotEmpty(frameEmployee.txtFieldSSN.getText(),
+		checkRecord = validation_GUI.checkStringNotEmpty(frameEmployee.textField_3.getText(),
 				EmployeeRecordIndices.SSN.getRecordIndexType());
 
 		if (!checkRecord) {
-			frameEmployee.txtFieldSSN.setText("");
+			frameEmployee.textField_3.setText("");
 		}
 		// else _SSN = frameEmployee.txtFieldSSN.getText();
 
 		if (checkRecord) {
-			checkRecord = validationNumber_GUI.checkStringNotEmpty(frameEmployee.txtFieldFN.getText(),
+			checkRecord = validationNumber_GUI.checkStringNotEmpty(frameEmployee.textField_4.getText(),
 					EmployeeRecordIndices.FIRST_NAME.getRecordIndexType());
 		}
 
 		if (!checkRecord) {
-			frameEmployee.txtFieldFN.setText("");
+			frameEmployee.textField_4.setText("");
 		}
 		// else _firstName = frameEmployee.txtFieldFN.getText();
 
 		if (checkRecord) {
-			checkRecord = validationNumber_GUI.checkStringNotEmpty(frameEmployee.txtFieldLN.getText(),
+			checkRecord = validationNumber_GUI.checkStringNotEmpty(frameEmployee.textField_5.getText(),
 					EmployeeRecordIndices.LAST_NAME.getRecordIndexType());
 		}
 
 		if (!checkRecord) {
-			frameEmployee.txtFieldLN.setText("");
+			frameEmployee.textField_5.setText("");
 		}
 		// else _lastName = frameEmployee.txtFieldLN.getText();
 	}
@@ -250,8 +253,8 @@ public class Helper4SuperEmployeeBase {
 
 		// Below display record results to a record-results area in the grade-book form
 		if (!isReadFile) {
-			frameEmployee.txtFieldEarnings.setText(twoDigits.format(record.earnings())); // only for creating file.
-			frameEmployee.txtFieldEmpCounter.setText(String.format("%d", employeeCounter)); // total student number
+			frameEmployee.textField_2.setText(twoDigits.format(record.earnings())); // only for creating file.
+			frameEmployee.textField_6.setText(String.format("%d", employeeCounter)); // total student number
 																							// already processed
 		}
 	}
@@ -267,9 +270,9 @@ public class Helper4SuperEmployeeBase {
 
 	public String showGradeBookResults(EmployeeBaseBook _employeeBook) {
 		if (employeeCounter != 0) {
-			frameEmployee.txtFieldEmpCounter.setText(String.format("%d", _employeeBook.employeeCounter));
-			frameEmployee.txtFieldHighestE.setText(twoDigits.format(_employeeBook.highestG()));
-			frameEmployee.txtFieldLowestE.setText(twoDigits.format(_employeeBook.lowestG()));
+			frameEmployee.textField_6.setText(String.format("%d", _employeeBook.employeeCounter));
+			frameEmployee.textField_7.setText(twoDigits.format(_employeeBook.highestG()));
+			frameEmployee.textField_8.setText(twoDigits.format(_employeeBook.lowestG()));
 			if (employeeCounter == EmployeeNo) {
 				_employeeBook.calculateAverage4Company();
 				frameEmployee.txtFieldAverage.setText(twoDigits.format(_employeeBook.mean));
@@ -309,7 +312,7 @@ public class Helper4SuperEmployeeBase {
 	public void enableProfileTextBoxes(boolean isEnable) {
 		boolean condition = false;
 
-		for (JTextField txtField : EmployeeBaseJFrame.listTxtFieldsProfileG) {
+		for (JTextField txtField : EmployeeBaseJFrame_V0.listTxtFieldsProfileG) {
 			txtField.setEnabled(isEnable);
 			condition = !isEnable;
 		}
@@ -318,7 +321,7 @@ public class Helper4SuperEmployeeBase {
 			txtField.setEnabled(!isEnable);
 		}
 
-		for (JTextField txtField : EmployeeBaseJFrame.listTxtFieldsEmployeeG) {
+		for (JTextField txtField : EmployeeBaseJFrame_V0.listTxtFieldsEmployeeG) {
 			txtField.setEnabled(!isEnable);
 		}
 
@@ -573,13 +576,13 @@ public class Helper4SuperEmployeeBase {
 	public void advancedlyProcessBasics() {
 		String[] arrOfStr = companyString.split("\t");
 		CompanyName = arrOfStr[1];
-		frameEmployee.txtFieldCN.setText(CompanyName);
-		frameEmployee.txtFieldCN.setEnabled(false);
+		frameEmployee.textField.setText(CompanyName);
+		frameEmployee.textField.setEnabled(false);
 
 		arrOfStr = employeeNoString.split("\t");
 		EmployeeNo = Integer.parseInt(arrOfStr[1]);
-		frameEmployee.txtFieldEN.setText(arrOfStr[1]);
-		frameEmployee.txtFieldEN.setEnabled(false);
+		frameEmployee.textField_1.setText(arrOfStr[1]);
+		frameEmployee.textField_1.setEnabled(false);
 
 		JOptionPane.showMessageDialog(null, "CompanyName=" + CompanyName + "\nEmployeeNo=" + EmployeeNo);
 		employeeBook = frameEmployee.setBasics2StartBookingEmployee(); // initialize a new employeeBook.

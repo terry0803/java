@@ -34,6 +34,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
@@ -50,7 +51,7 @@ import javax.swing.border.BevelBorder;
 public class EmployeeBaseJFrame_V0 extends JFrame {
 
 	public static final long serialVersionUID = 1L;
-	public static CommissionEmployeeJFrame_V0 frame;
+	public static EmployeeBaseJFrame_V0 frame;
 	public JButton btnSetProfile;
 	public JButton btnClearProfileresults;
 	public JButton btnClearRecord;
@@ -83,6 +84,23 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 	public JSeparator separator_2;
 	public JSeparator separator_1_1;
 	public JPanel contentPane;
+	public JTextField textField;
+	public JTextField textField_1;
+	public JTextField textField_2;
+	public JTextField textField_3;
+	public JTextField textField_4;
+	public JTextField textField_5;
+	public JTextField textField_6;
+	public JTextField textField_7;
+	public JTextField textField_8;
+	public JTextField textField_9;
+	public JTextField textField_10;
+	public JTextField textField_11;
+	public JTextField textField_12;
+	public JTextField textField_13;
+	public JTextField textField_14;
+	public JTextField textField_15;
+	public JTextField textField_16;
 
 	public static String employeeType;
 
@@ -157,6 +175,9 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 
 	}
 
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public EmployeeBaseJFrame_V0(String employeeType) {
 		employeeType4JFrame = employeeType;
 		setupAll();
@@ -169,7 +190,7 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 	}
 
 	public void setupAll() {
-		setupTitleAndBasics4JFrame("Employee-Book Application for ", employeeType);
+		setUpTitleAndBasics4JFrame("Employee-Book Application for ", employeeType);
 		createAndSetupCoreComponents4JTabbedPane(); // added
 		setupComponents4JPanel(); // move all components in contentPane inside of this method.
 
@@ -325,7 +346,7 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 		btnClearProfileresults = new JButton("Clear Profile/Results");
 		btnClearProfileresults.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
 		btnClearProfileresults.setBackground(new Color(227, 227, 227));
-		btnClearProfileresults.setBounds(340, 10, 263, 29);
+		btnClearProfileresults.setBounds(344, 10, 263, 29);
 		contentPane.add(btnClearProfileresults);
 
 		lblTotalEmployee = new JLabel("Total Employee:");
@@ -664,7 +685,7 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 
 	    optionButtons = buttonsInitialized;
 	    for (int i = 0; i < basicChoices.length; i++) {
-	        optionButtons[i].setIcon(new ImageIcon(EmployeeBaseJFrame.class.getResource(basicChoices[i].getImageIcon())));
+	        optionButtons[i].setIcon(new ImageIcon(EmployeeBaseJFrame_V0.class.getResource(basicChoices[i].getImageIcon())));
 	        optionButtons[i].setText(basicChoices[i].getButtonType());
 	        System.out.println("i=" + i + " " + basicChoices[i].getImageIcon());
 
@@ -833,17 +854,10 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 	        }
 
 	        public EmployeeBaseJFrame_V0 refreshJFrame() {
-	            EmployeeBaseJFrame_V0 component = new EmployeeBaseJFrame_V0(employeeType4Jframe);
-	            buttonController = new ButtonController4SuperBase(new EmployeeBaseJFrame_V0(employeeType4Jframe), theDesktop);
-	            Main_Run(component, employeeType4Jframe, buttonController);
+	            EmployeeBaseJFrame_V0 component = new EmployeeBaseJFrame_V0(employeeType4JFrame);
+	            buttonController = new ButtonController4SuperBase(new EmployeeBaseJFrame_V0(employeeType4JFrame), theDesktop);
+	            Main_Run(component, employeeType4JFrame, buttonController);
 
 	            return component;
-	        }
-
-	        
-
+	        }   
 	    }
-
-	
-	
-
