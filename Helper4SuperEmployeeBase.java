@@ -19,22 +19,20 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import Lin.library.checkandvalidation.InputNumberValidation;
+import Lin.library.checkandvalidation.InputNumberValidation_GUI_CONSOLE;
 import Lin.library.enummenu.Buttons4UniversalProcess_MenuOption;
-import Lin.library.filestream.ReadFileExample;
-import Lin.payablesys.employeetype.BasePlusCommissionEmployee;
-import Lin.payablesys.employeetype.CommissionEmployee;
-import Lin.payablesys.employeetype.Employee;
-import Lin.payablesys.employeetype.HourlyEmployee;
-import Lin.payablesys.employeetype.SalariedEmployee;
-import Lin.payablesys.employeetype.earningbook.EmployeeBaseBook;
+import Lin.library.enummenu.FileStreamType_MenuOption;
+import Lin.library.filestream.OpenFileRecord;
+import Lin.polymorphism.employee.*;
 import Lin.polymorphism.employee.frame.*;
 import Lin.polymorphism.employee.menuoption.EarningLevelEnum1;
 import Lin.polymorphism.employee.menuoption.EmployeeRecordIndices;
+import Lin.library.enummenu.NumberType_MenuOption;
 
 public class Helper4SuperEmployeeBase {
 	protected InputNumberValidation ValidationGUI = new InputNumberValidation(false, true);
 	protected PieChart2DMemo0 pieChartDemo; // old one from last year
-	// protected PieChartDemo4 employeePieChartDemo;
 
 	ArrayList<SalariedEmployee> CELIST_Salaried = new ArrayList<SalariedEmployee>(); // this is for creating file.
 	ArrayList<HourlyEmployee> CELIST_Hourly = new ArrayList<HourlyEmployee>(); // this is for creating file.
@@ -89,7 +87,7 @@ public class Helper4SuperEmployeeBase {
 
 	static EmployeeBaseJFrame_V0 employeeBaseJFrame = null;
 	static PieChartType_MenuOption pieChartType_MenuOption = null;
-	public EmployeeBaseBook employeeBaseBook;
+	public EmployeeBaseBook employeeBook;
 
 	public String filePath = "./filePath";
 	static FileChoosing4WriteOrRead_V2 fileChoosing4WriteOrRead;
@@ -124,7 +122,7 @@ public class Helper4SuperEmployeeBase {
 		employeeBook = frameEmployee.employeeBook;
 	}
 
-	public Helper4SuperEmployeeBase(Lin.polymorphism.employee.frame.EmployeeBaseJFrame_V0 employeeBaseJFrame2) {
+	public Helper4SuperEmployeeBase(Lin.polymorphism.employee.interfaceframe.EmployeeBaseJFrame employeeBaseJFrame2) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -155,7 +153,7 @@ public class Helper4SuperEmployeeBase {
 		frameEmployee.lblCUpperThreshold.setText("" + EarningLevelEnum1.LevelB.getValue());
 		// ...
 		frameEmployee.lblUnit
-				.setText("" + EarningLevelEnum1.UNIT.getLevelType() + " (" + EarningLevelEnum1.UNIT.getValue() + ")");
+				.setText("" + EarningLevelEnum1.UNIT.getTypeValue() + " (" + EarningLevelEnum1.UNIT.getValue() + ")");
 	}
 
 	/**
@@ -173,7 +171,7 @@ public class Helper4SuperEmployeeBase {
 		if (checkProfile)
 			checkProfile = validationNumber_GUI.checkNumberValueByComparing_1flag(frameEmployee.textField_1.getText(),
 					EmployeeRecordIndices.EMPLOYEE_NO.getRecordIndexType(), 0, 1,
-					NumberTypeMenuOption.INT_NUMBER_TYPE.getValueIndex());
+					NumberType_MenuOption.INT_NUMBER_TYPE.getValueIndex());
 
 		if (!checkProfile)
 			frameEmployee.textField_1.setText("");
@@ -253,8 +251,8 @@ public class Helper4SuperEmployeeBase {
 
 		// Below display record results to a record-results area in the grade-book form
 		if (!isReadFile) {
-			frameEmployee.textField_2.setText(twoDigits.format(record.earnings())); // only for creating file.
-			frameEmployee.textField_6.setText(String.format("%d", employeeCounter)); // total student number
+			frameEmployee.txtFieldEarnings.setText(twoDigits.format(record.earnings())); // only for creating file.
+			frameEmployee.txtFieldEmpCounter.setText(String.format("%d", employeeCounter)); // total student number
 																							// already processed
 		}
 	}
@@ -275,7 +273,7 @@ public class Helper4SuperEmployeeBase {
 			frameEmployee.textField_8.setText(twoDigits.format(_employeeBook.lowestG()));
 			if (employeeCounter == EmployeeNo) {
 				_employeeBook.calculateAverage4Company();
-				frameEmployee.txtFieldAverage.setText(twoDigits.format(_employeeBook.mean));
+				frameEmployee.textField_9.setText(twoDigits.format(_employeeBook.mean));
 
 				wholeRecords4Output += _employeeBook.toString();
 				frameEmployee.txtArea4RecordTextArea.setText(wholeRecords4Output);
@@ -383,9 +381,10 @@ public class Helper4SuperEmployeeBase {
 	 */
 	public void showPieChartOfWageDistribution(EmployeeBaseBook _employeeBook) {
 		// 1. old one from last year--Still working(2D)
-		employeeBook.levelsV[0] = (double) ((_employeeBook.aLevel * 100.00) / employeeCounter);
-		employeeBook.levelsV[1] = (double) ((_employeeBook.bLevel * 100.00) / employeeCounter);
-		employeeBook.levelsV[2] = (double) ((_employeeBook.cLevel * 100.00) / employeeCounter);
+		_employeeBook.levelsV[0] = (double) ((_employeeBook.aLevel * 100.00) / employeeCounter);
+		_employeeBook.levelsV[1] = (double) ((_employeeBook.bLevel * 100.00) / employeeCounter);
+		_employeeBook.levelsV[2] = (double) ((_employeeBook.cLevel * 100.00) / employeeCounter);
+
 		if (pieChartChoosen == PieChart2D_Type1) { // it can be closed separately.
 			pieChartDemo = new PieChart2DDemo0("Wage-Level Distribution", _employeeBook.levelsS, _employeeBook.levelsV);
 		} else if (pieChartChoosen == PieChart2D_Type2) { // if it is closed, the whole app would exit.
@@ -533,45 +532,47 @@ public class Helper4SuperEmployeeBase {
 	}
 
 	public void readFile_EmployeeAccount() throws ClassNotFoundException, IOException {
-        				    JOptionPane.showMessageDialog(null, "The next file writer chosen is for recording every account record.", 
-        				                                  "Read Account Records", JOptionPane.INFORMATION_MESSAGE);
-        				    ImageIcon icon = new ImageIcon("/resources/images/question_message_120x120.png");
-        				    Choice4FileStreamType choice4FileStreamType = new Choice4FileStreamType();
-        				    streamType_MenuOption = choice4FileStreamType.decideWhichFileStreamType(icon);
+		JOptionPane.showMessageDialog(null, "The next file writer chosen is for recording every account record.",
+				"Read Account Records", JOptionPane.INFORMATION_MESSAGE);
+		ImageIcon icon = new ImageIcon("/resources/images/question_message_120x120.png");
+		Choice4FileStreamType choice4FileStreamType = new Choice4FileStreamType();
+		streamType_MenuOption = choice4FileStreamType.decideWhichFileStreamType(icon);
 
-        				    if (streamType_MenuOption != null) {
-        				        /**
-        				         * Below is for fileChooser used for writing account records
-        				         */
-        				        JOptionPane.showMessageDialog(null, "filePath="+filePath);
-        				        fileChoosing4WriteOrRead = new FileChoosing4WriteOrRead_v2(false, true, streamType_MenuOption.getValue());
-        				        fileChoosing4WriteOrRead.chooseFile(filePath);
-        				        fileChoosing4WriteOrRead.openFile2Read(streamType_MenuOption.getOptionType());
+		if (streamType_MenuOption != null) {
+			/**
+			 * Below is for fileChooser used for writing account records
+			 */
+			JOptionPane.showMessageDialog(null, "filePath=" + filePath);
+			fileChoosing4WriteOrRead = new FileChoosing4WriteOrRead_v2(false, true, streamType_MenuOption.getValue());
+			fileChoosing4WriteOrRead.chooseFile(filePath);
+			fileChoosing4WriteOrRead.openFile2Read(streamType_MenuOption.getOptionType());
 
-        				        if (streamType_MenuOption == FileStreamType_MenuOption.BYTE_BASED) {
-        				            inputO = fileChoosing4WriteOrRead.inputO(); // Here, output has been implemented and not 'null'
+			if (streamType_MenuOption == FileStreamType_MenuOption.BYTE_BASED) {
+				inputO = fileChoosing4WriteOrRead.inputO; // Here, output has been implemented and not 'null'
 
-        				            // Read basic profile into file(added on 02Aug19)
-        				            companyString = inputO.readObject().toString();
-        				            employeeNoString = inputO.readObject().toString();
-        				        } else {
-        				            inputT = fileChoosing4WriteOrRead.inputT(); // Here output has been implemented and not 'null'
+				// Read basic profile into file(added on 02Aug19)
+				companyString = inputO.readObject().toString();
+				employeeNoString = inputO.readObject().toString();
+			} else {
+				inputT = fileChoosing4WriteOrRead.inputT(); // Here output has been implemented and not 'null'
 
-        				            // Read basic profile into file(added on 02Aug19)
-        				            companyString = inputT.nextLine();
-        				            employeeNoString = inputT.nextLine();
-        				        }
-        				            advancedlyProcessBasics();
+				// Read basic profile into file(added on 02Aug19)
+				companyString = inputT.nextLine();
+				employeeNoString = inputT.nextLine();
+			}
+			advancedlyProcessBasics();
 
-        				            if (fileChoosing4WriteOrRead.result == JFileChooser.APPROVE_OPTION) {
-        				                // System.out.println("I am inside of 'fileChoosing4WriteOrRead.result == JFileChooser.APPROVE_OPTION'");
-        				                System.out.println("File chosen for Read is successfully opened!");
-        				            }
-        				            isFileChosenOK = true;
+			if (fileChoosing4WriteOrRead.result == JFileChooser.APPROVE_OPTION) {
+				// System.out.println("I am inside of 'fileChoosing4WriteOrRead.result ==
+				// JFileChooser.APPROVE_OPTION'");
+				System.out.println("File chosen for Read is successfully opened!");
+			}
+			isFileChosenOK = true;
 
-        				            } else {
-        				                JOptionPane.showMessageDialog(null, "You just cancel the action!");
-        				            }
+		} else
+			JOptionPane.showMessageDialog(null, "You just cancel the action!");
+
+	}
 
 	public void advancedlyProcessBasics() {
 		String[] arrOfStr = companyString.split("\t");
@@ -672,8 +673,7 @@ public class Helper4SuperEmployeeBase {
 
 			frameEmployee = frameEmployee.refreshJFrame();
 
-			if (theDesktop != null) // added 3Aug19
-			{
+			if (theDesktop != null) {
 				theDesktop.add(frameEmployee);
 			}
 		} else
@@ -681,9 +681,6 @@ public class Helper4SuperEmployeeBase {
 					JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	/**
-	 * Get final processed report.
-	 */
 	public String toString() {
 		return finalReport;
 	}
