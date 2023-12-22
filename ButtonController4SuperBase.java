@@ -130,6 +130,8 @@ public /* abstract */ class ButtonController4SuperBase {
     }
 
     public void setProfile() {
+    	frameEmployee.btnCalculate.setEnabled(true);
+    	frameEmployee.btnOpenFile.setEnabled(false);
         employeeBook = frameEmployee.setBasics2StartBookingEmployee();
     }
 

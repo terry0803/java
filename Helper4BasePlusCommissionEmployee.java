@@ -13,7 +13,7 @@ import Lin.polymorphism.employee.CommissionEmployee;
 import Lin.polymorphism.employee.Employee;
 import Lin.payablesys.employeetype.earningbook.EmployeeBaseBook;
 import Lin.polymorphism.employee.frame.BasePlusCommissionEmployeeJFrame;
-import Lin.polymorphism.employee.frame.CommissionEmployeeJFrame_V1;
+import Lin.polymorphism.employee.frame.CommissionEmployeeJFrame_231108;
 import Lin.polymorphism.employee.menuoption.EmployeeRecordIndices;
 // import io.swingtest.app18.table.TableDemoPayrollSystem_23July19_v3;
 // import io.swingtest2.app108.TableDemoPayrollSystem_23July19_v2;
@@ -39,7 +39,7 @@ public class Helper4BasePlusCommissionEmployee extends Helper4CommissionEmployee
 
         if (!checkRecord)
             ((BasePlusCommissionEmployeeJFrame) frameEmployee).txtFieldBaseSalary.setText("");
-
+    }
         @Override
         public void getInputDataReady(boolean _checkRecord) {
             super.getInputDataReady(_checkRecord);

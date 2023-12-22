@@ -24,6 +24,7 @@ import Lin.library.checkandvalidation.InputNumberValidation_GUI_CONSOLE;
 import Lin.library.enummenu.Buttons4UniversalProcess_MenuOption;
 import Lin.library.enummenu.FileStreamType_MenuOption;
 import Lin.library.filestream.OpenFileRecord;
+import Lin.payablesys.employeetype.earningbook.EmployeeBaseBook;
 import Lin.polymorphism.employee.*;
 import Lin.polymorphism.employee.frame.*;
 import Lin.polymorphism.employee.menuoption.EarningLevelEnum1;
@@ -160,27 +161,27 @@ public class Helper4SuperEmployeeBase {
 	 * prepare Basic Profile Using pre-Check.
 	 */
 	public void prepareBasicProfileUsingCheck() {
-		checkProfile = validationNumber_GUI.checkStringNotEmpty(frameEmployee.textField.getText(),
+		checkProfile = validationNumber_GUI.checkStringNotEmpty(frameEmployee.txtFieldCN.getText(),
 				EmployeeRecordIndices.COMPANY_NAME.getRecordIndexType());
 
 		JOptionPane.showMessageDialog(null, "employee=" + frameEmployee.getClass());
 
 		if (!checkProfile)
-			frameEmployee.textField.setText("");
+			frameEmployee.txtFieldCN.setText("");
 
 		if (checkProfile)
-			checkProfile = validationNumber_GUI.checkNumberValueByComparing_1flag(frameEmployee.textField_1.getText(),
+			checkProfile = validationNumber_GUI.checkNumberValueByComparing_1flag(frameEmployee.txtFieldEN.getText(),
 					EmployeeRecordIndices.EMPLOYEE_NO.getRecordIndexType(), 0, 1,
 					NumberType_MenuOption.INT_NUMBER_TYPE.getValueIndex());
 
 		if (!checkProfile)
-			frameEmployee.textField_1.setText("");
+			frameEmployee.txtFieldEN.setText("");
 		// else EmployeeNo=validation_GUI.intValue;
 
 		// finally-> if everything is ready-> get all input data in profile area
 		if (checkProfile) {
-			CompanyName = frameEmployee.textField.getText();
-			EmployeeNo = Integer.parseInt(frameEmployee.textField_1.getText());
+			CompanyName = frameEmployee.txtFieldCN.getText();
+			EmployeeNo = Integer.parseInt(frameEmployee.txtFieldEN.getText());
 			// Open File can start from here (01Aug19)
 			frameEmployee.btnOpenFile.setEnabled(true);
 		}
@@ -197,31 +198,31 @@ public class Helper4SuperEmployeeBase {
 		 * frameEmployee.txtFieldSSN.getText(),
 		 * EmployeeRecordIndices.SSN.getRecordIndexType());
 		 */
-		checkRecord = validation_GUI.checkStringNotEmpty(frameEmployee.textField_3.getText(),
+		checkRecord = validationNumber_GUI.checkStringNotEmpty(frameEmployee.txtFieldSSN.getText(),
 				EmployeeRecordIndices.SSN.getRecordIndexType());
 
 		if (!checkRecord) {
-			frameEmployee.textField_3.setText("");
+			frameEmployee.txtFieldSSN.setText("");
 		}
 		// else _SSN = frameEmployee.txtFieldSSN.getText();
 
 		if (checkRecord) {
-			checkRecord = validationNumber_GUI.checkStringNotEmpty(frameEmployee.textField_4.getText(),
+			checkRecord = validationNumber_GUI.checkStringNotEmpty(frameEmployee.txtFieldFN.getText(),
 					EmployeeRecordIndices.FIRST_NAME.getRecordIndexType());
 		}
 
 		if (!checkRecord) {
-			frameEmployee.textField_4.setText("");
+			frameEmployee.txtFieldFN.setText("");
 		}
 		// else _firstName = frameEmployee.txtFieldFN.getText();
 
 		if (checkRecord) {
-			checkRecord = validationNumber_GUI.checkStringNotEmpty(frameEmployee.textField_5.getText(),
+			checkRecord = validationNumber_GUI.checkStringNotEmpty(frameEmployee.txtFieldLN.getText(),
 					EmployeeRecordIndices.LAST_NAME.getRecordIndexType());
 		}
 
 		if (!checkRecord) {
-			frameEmployee.textField_5.setText("");
+			frameEmployee.txtFieldLN.setText("");
 		}
 		// else _lastName = frameEmployee.txtFieldLN.getText();
 	}
@@ -247,7 +248,7 @@ public class Helper4SuperEmployeeBase {
 
 		frameEmployee.txtArea4RecordTextArea.setText(wholeRecords4Output); // add every record to output listbox.
 		frameEmployee.listModel.addElement(record.toString3());
-		frameEmployee.listArea4RecordListArea.getModel(frameEmployee.listModel);
+		frameEmployee.listArea4RecordListArea.getModel();
 
 		// Below display record results to a record-results area in the grade-book form
 		if (!isReadFile) {
@@ -268,12 +269,12 @@ public class Helper4SuperEmployeeBase {
 
 	public String showGradeBookResults(EmployeeBaseBook _employeeBook) {
 		if (employeeCounter != 0) {
-			frameEmployee.textField_6.setText(String.format("%d", _employeeBook.employeeCounter));
-			frameEmployee.textField_7.setText(twoDigits.format(_employeeBook.highestG()));
-			frameEmployee.textField_8.setText(twoDigits.format(_employeeBook.lowestG()));
+			frameEmployee.txtFieldEmpCounter.setText(String.format("%d", _employeeBook.employeeCounter));
+			frameEmployee.txtFieldHighestE.setText(twoDigits.format(_employeeBook.highestG));
+			frameEmployee.txtFieldLowestE.setText(twoDigits.format(_employeeBook.lowestG));
 			if (employeeCounter == EmployeeNo) {
 				_employeeBook.calculateAverage4Company();
-				frameEmployee.textField_9.setText(twoDigits.format(_employeeBook.mean));
+				frameEmployee.txtFieldAverageE.setText(twoDigits.format(_employeeBook.mean));
 
 				wholeRecords4Output += _employeeBook.toString();
 				frameEmployee.txtArea4RecordTextArea.setText(wholeRecords4Output);
@@ -448,7 +449,7 @@ public class Helper4SuperEmployeeBase {
 
 		fileWrite = OpenFileRecord.getfile(_filePath, useJPane);
 		if (fileWrite != null) {
-			OpenFileRecord.openfile(fileWrite);
+			OpenFileRecord.openFile(fileWrite);
 		}
 
 		// ------Below is for choosing Stream-type used for writing account
@@ -577,13 +578,13 @@ public class Helper4SuperEmployeeBase {
 	public void advancedlyProcessBasics() {
 		String[] arrOfStr = companyString.split("\t");
 		CompanyName = arrOfStr[1];
-		frameEmployee.textField.setText(CompanyName);
-		frameEmployee.textField.setEnabled(false);
+		frameEmployee.txtFieldCN.setText(CompanyName);
+		frameEmployee.txtFieldCN.setEnabled(false);
 
 		arrOfStr = employeeNoString.split("\t");
 		EmployeeNo = Integer.parseInt(arrOfStr[1]);
-		frameEmployee.textField_1.setText(arrOfStr[1]);
-		frameEmployee.textField_1.setEnabled(false);
+		frameEmployee.txtFieldEN.setText(arrOfStr[1]);
+		frameEmployee.txtFieldEN.setEnabled(false);
 
 		JOptionPane.showMessageDialog(null, "CompanyName=" + CompanyName + "\nEmployeeNo=" + EmployeeNo);
 		employeeBook = frameEmployee.setBasics2StartBookingEmployee(); // initialize a new employeeBook.
@@ -598,9 +599,9 @@ public class Helper4SuperEmployeeBase {
 		record.setColor(frameEmployee.employeeBook.indexColor);
 
 		JOptionPane.showMessageDialog(null, "Employee: " + employeeCounter + ":\n" + record.toString2());
-		wholeRecords40utput += record.toString();
+		wholeRecords4Output += record.toString();
 
-		frameEmployee.txtArea4RecordTextArea.setText(wholeRecords40utput);
+		frameEmployee.txtArea4RecordTextArea.setText(wholeRecords4Output);
 
 		AddEveryRecordAndShowProcessedResults(record);
 
@@ -636,12 +637,12 @@ public class Helper4SuperEmployeeBase {
 
 	public void checkIfEmployeeCounterEqual2EmployeeNo() {
 		if (employeeCounter == EmployeeNo) {
-			finalReport = wholeRecords40utput;
+			finalReport = wholeRecords4Output;
 			JOptionPane.showMessageDialog(null, "All employees' records have done input!");
 
-			frameEmployee.txtFieldIdA.setText("" + frameEmployee.employeeBook.aLevel);
-			frameEmployee.txtFieldIdB.setText("" + frameEmployee.employeeBook.bLevel);
-			frameEmployee.txtFieldIdC.setText("" + frameEmployee.employeeBook.cLevel);
+			frameEmployee.txtFieldLA.setText("" + frameEmployee.employeeBook.aLevel);
+			frameEmployee.txtFieldLB.setText("" + frameEmployee.employeeBook.bLevel);
+			frameEmployee.txtFieldLC.setText("" + frameEmployee.employeeBook.cLevel);
 
 			addWholeRecords2JTable();
 

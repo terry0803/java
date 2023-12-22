@@ -10,9 +10,10 @@ import Lin.library.enummenu.FileStreamType_MenuOption;
 import Lin.library.enummenu.NumberType_MenuOption;
 import Lin.polymorphism.employee.CommissionEmployee;
 import Lin.polymorphism.employee.Employee;
-import Lin.payablesys.employeetype.earningbook.EmployeeBaseBook;
 import Lin.polymorphism.employee.frame.CommissionEmployeeJFrame_V1;
+import Lin.payablesys.employeetype.earningbook.EmployeeBaseBook;
 import Lin.polymorphism.employee.menuoption.EmployeeRecordIndices;
+import Lin.polymorphism.employee.frame.BasePlusCommissionEmployeeJFrame;
 //import Lin.polymorphism.system.EmployeePayrollSystem_23July19_v3;
 //import Lin.polymorphism.employee.menupotion.EmployeeRecordIndices;
 // import io.swingtest.app18.table.TableDemoPayrollSystem_23July19_v3;
@@ -87,9 +88,9 @@ public class Helper4CommissionEmployee extends Helper4SuperEmployeeBase {
 	} // end readFile()
 
 	@Override
-	public void readRecordData() throws NumberFormatException, ClassNotFoundException, NoSuchElementException,
-	NullPointerException, ClassCastException, IOException {
-
+    public void readRecordData() throws NumberFormatException, ClassNotFoundException, NoSuchElementException,
+    NullPointerException, ClassCastException, IOException {
+		
 		CommissionEmployee record = null;
 		if (isFileChoosenOK()) {
 			eList_Commission = new ArrayList<CommissionEmployee>();

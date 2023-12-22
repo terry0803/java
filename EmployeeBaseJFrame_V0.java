@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
 import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import Lin.library.enummenu.Buttons4UniversalProcess_MenuOption;
@@ -15,103 +16,128 @@ import Lin.polymorphism.employee.buttoncontroller.ButtonController4SuperBase;
 import Lin.polymorphism.employee.helper.Helper4SuperEmployeeBase;
 import Lin.polymorphism.employee.menuoption.EmployeeRecordIndices;
 
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDesktopPane;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.Insets;
+
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.JSeparator;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-
+import javax.swing.UIManager;
+import javax.swing.JTextField;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.BevelBorder;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
+
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+
 import java.awt.Rectangle;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
+import javax.imageio.plugins.jpeg.JPEGImageReadParam;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDesktopPane;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.ImageIcon;
 
 public class EmployeeBaseJFrame_V0 extends JFrame {
 
 	public static final long serialVersionUID = 1L;
 	public static EmployeeBaseJFrame_V0 frame;
-	public JButton btnSetProfile;
-	public JButton btnClearProfileresults;
-	public JButton btnClearRecord;
-	public JButton btnCalculate;
-	public JButton btnOutputToTextArea;
-	public JButton btnPieChartDemo;
-	public JButton btnRefresh;
-	public JButton btnOpenFile;
-	public JButton btnWriteFile;
-	public JButton btnReadFile;
-	public JButton btnCloseFile;
-	public JButton btnExit;
-	public JLabel lblNewLabel;
-	public JLabel lblTotalEmployee;
+	public JPanel contentPane;
+	public JTextField txtFieldCN;
+	public JTextField txtFieldEN;
+	public JTextField txtFieldEarnings;
+	public JTextField txtFieldSSN;
+	public JTextField txtFieldFN;
+	public JTextField txtFieldLN;
+	public JTextField txtFieldEmpCounter;
+	public JTextField txtFieldHighestE;
+   public JTextField txtFieldLowestE;
+	public JTextField txtFieldAverageE;
+	public JTextField txtFieldLA;
+	public JTextField txtFieldLB;
+	public JTextField txtFieldLC;
+
+	public JLabel lblCompanyName;
+	public JLabel lblTotalEmployees;
 	public JLabel lblEarnings;
-	public JLabel lblResultsArea;
-	public JLabel lblSsn;
+	public JLabel lblSSN;
 	public JLabel lblFirstName;
-	public JLabel lblEmployeeCounter;
-	public JLabel lblHighestEarnings;
-	public JLabel lblRightName;
-	public JLabel lblLowestEarnings;
-	public JLabel lblAverageEarnings;
-	public JLabel lblUnit;
+	public JLabel lblLastName;
+
+	public JSeparator separatorResultTop;
+	public JSeparator separatorResultBottom;
+	public JSeparator separator_1;
+	public JSeparator separator_2;
 	public JLabel lblAlevel;
 	public JLabel lblBlevel;
 	public JLabel lblClevel;
-	public JLabel lblUnit_1;
+	public JLabel lblUnitSymbol;
+	public JLabel lblUnit;
+	public JLabel lblRange;
+	public JLabel lblALowerThreshold;
+	public JLabel lblBLowerThreshold;
+	public JLabel lblBUpperThreshold;
+	public JLabel lblCUpperThreshold;
+	public JLabel lblDistribution;
 	public JSeparator separator;
-	public JSeparator separator_2;
-	public JSeparator separator_1_1;
-	public JPanel contentPane;
-	public JTextField textField;
-	public JTextField textField_1;
-	public JTextField textField_2;
-	public JTextField textField_3;
-	public JTextField textField_4;
-	public JTextField textField_5;
-	public JTextField textField_6;
-	public JTextField textField_7;
-	public JTextField textField_8;
-	public JTextField textField_9;
-	public JTextField textField_10;
-	public JTextField textField_11;
-	public JTextField textField_12;
-	public JTextField textField_13;
-	public JTextField textField_14;
-	public JTextField textField_15;
-	public JTextField textField_16;
+	public JLabel lblResultArea;
+	public JLabel lblLowestEarnings;
+	public JLabel lblAverageEarnings;
+	public JLabel lblHighestEarnings;
+	public JLabel lblEmpCounter;
+
+	public JButton btnSetProfile;
+	public JButton btnClearProfile;
+	public JButton btnClearRecord;
+	public JButton btnCalculate;
+	public JButton btnOpenFile;
+	public JButton btnOutputAll;
+	public JButton btnWriteFile;
+	public JButton btnPieChartDemo;
+	public JButton btnReadFile;
+	public JButton btnCloseFile;
+	public JButton btnRefresh;
+	public JButton btnExit;
 
 	public static String employeeType;
 
 	public JButton[] optionButtons;
-	public Buttons4UniversalProcess_MenuOption[] basicChoices = { Buttons4UniversalProcess_MenuOption.Process_Data,
-			Buttons4UniversalProcess_MenuOption.Refresh, Buttons4UniversalProcess_MenuOption.Clear_Record,
+	public Buttons4UniversalProcess_MenuOption[] basicChoices = {
+			Buttons4UniversalProcess_MenuOption.Process_Data,
+			Buttons4UniversalProcess_MenuOption.Refresh, 
+			Buttons4UniversalProcess_MenuOption.Clear_Record,
 			Buttons4UniversalProcess_MenuOption.Set_Profile,
 			Buttons4UniversalProcess_MenuOption.Clear_Profile_and_Results,
-			Buttons4UniversalProcess_MenuOption.Output_Results, Buttons4UniversalProcess_MenuOption.OpenFile,
-			Buttons4UniversalProcess_MenuOption.ReadFile, Buttons4UniversalProcess_MenuOption.WriteFile,
-			Buttons4UniversalProcess_MenuOption.CloseFile, Buttons4UniversalProcess_MenuOption.PieChartDemo };
+			Buttons4UniversalProcess_MenuOption.Output_Results, 
+			Buttons4UniversalProcess_MenuOption.Exit,
+			Buttons4UniversalProcess_MenuOption.OpenFile, 
+			Buttons4UniversalProcess_MenuOption.ReadFile,
+			Buttons4UniversalProcess_MenuOption.WriteFile, 
+			Buttons4UniversalProcess_MenuOption.CloseFile,
+			Buttons4UniversalProcess_MenuOption.PieChartDemo };
+
 
 	JTabbedPane tabbedPane;
 	public String title4InputArea = "Main Frame Area", tip4InputArea = "Input and Calculation Area";
@@ -148,10 +174,10 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 
 	public static ButtonController4SuperBase buttonController;
 	public Helper4SuperEmployeeBase helper4Employee;
-	public static Verifier4SuperEmployeeBase Verifier4SuperEmployee;
+	//public static Verifier4SuperEmployeeBase verifier4Employee;
 	public EmployeeBaseBook employeeBook;
 
-	public JDesktopPane theDesktop; // added 28July19 after done 'InheritancePayrollSystem'
+	public JDesktopPane theDesktop; //added 23Dec17 after done 'InheritancePayrollSystem_28July19_v4
 	public String employeeType4JFrame;
 
 	/**
@@ -190,49 +216,54 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 	}
 
 	public void setupAll() {
+
 		setUpTitleAndBasics4JFrame("Employee-Book Application for ", employeeType);
 		createAndSetupCoreComponents4JTabbedPane(); // added
-		setupComponents4JPanel(); // move all components in contentPane inside of this method.
+		setupComponents4JPanel();// move all components in contentPane inside of this method.
 
 		initializeButtonArray();
 		initializeTextFieldArrayList();
 
 		initializeTitleNamesList4JTable();
 		initialize4TitleNamesString4JTable();
-
+		
 		setupMenubarWithLookAndFeel(300, 0, 115, 35, EmployeeBaseJFrame_V0.class, this);
 
-		verifier4Employee = new Verifier4SuperEmployeeBase(this);
+//		verifier4Employee = new Verifier4SuperEmployeeBase(this);
 		helper4Employee = new Helper4SuperEmployeeBase(this);
+
 	}
 
 	public static void Main_Run(EmployeeBaseJFrame_V0 component, String _employeeType,
-			ButtonController4SuperBase _buttonController/* JDesktopPane theDesktop */) {
+			ButtonController4SuperBase _buttonController /* , JDesktopPane theDesktop */ ) {
+
 		buttonController = _buttonController;
 		buttonController.addActionListenerOnButtons();
 		run2StartOrRefresh(_employeeType, component);
 
 		component.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		component.pluginVerifier4TextFieldArrayList();
+//		component.pluginVerifier4TextFieldArrayList();
 		component.setVisible(true);
+
 	}
 	
-	public static void setTheLookAndFeelInMain(/*Component resourceBase*/ EmployeeBaseJFrame_V0 _frame) {
-    // Set the look and feel.
-    if(classNameCurrent == null) {
-        initLookAndFeel(_frame.getClass());
-        // initLookAndFeel(component.getClass()));
-    } else {
-        try {
-            UIManager.setLookAndFeel(classNameCurrent);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
+	public static void setTheLookAndFeelInMain(/* Component resourceBase */ EmployeeBaseJFrame_V0 _frame) {
+	//  public static void setTheLookAndFellInMain(/*Component component){
+			// Set the look and feel
+			if (classNameCurrent == null) {
+				initLookAndFeel(_frame.getClass());
+				// initLookAndFeel(component.getClass());
+			} else {
+				try {
+					UIManager.setLookAndFeel(classNameCurrent);
+				} catch (Exception e) {
+					System.out.println(e);
+				}
 
-    SwingUtilities.updateComponentTreeUI(_frame);
-    // SwingUtilities.updateComponentTreeUI(component);
-}
+				SwingUtilities.updateComponentTreeUI(_frame);
+				// SwingUtilities.updateComponentTreeUI(component);
+			}
+		}
 	
 	public static void run2StartOrRefresh(String _frameTitle, EmployeeBaseJFrame_V0 component) {
 	    EventQueue.invokeLater(new Runnable() {
@@ -263,47 +294,43 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 
 	
 	protected void createAndSetupCoreComponents4JTabbedPane() {
-	    contentPane = new JPanel();
-	    // contentPane.setBorder(new EmptyBorder(5, 5, 5, 5)); //original
-	    contentPane.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, Color.CYAN, null)); // modified
-	    contentPane.setBackground(new Color(225, 225, 255)); //added on 4Aug19
-	    
-	    contentPane.setLayout(null); // without this line, layout is funny!
 
-	    box1 = Box.createHorizontalBox();
-	    box2 = Box.createHorizontalBox();
-	    box3 = Box.createHorizontalBox();
+		contentPane = new JPanel();
+		// contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));//original
+		contentPane.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.LIGHT_GRAY, null, Color.CYAN, null));// modified
+		contentPane.setBackground(new Color(225, 225, 225)); //added on 17Dec23
+		contentPane.setLayout(null); //without this line, layout is funny!
 
-	    txtArea4RecordTextArea = new JTextArea(500, 650); // original (500, 400)
-	    txtArea4RecordTextArea.setEditable(false);
-	    //txtArea4RecordTextArea.setLineWrap(true); // with this line on--> no horizontal JScrollPane
-	    box1.add(new JScrollPane(txtArea4RecordTextArea));
+		box1 = Box.createHorizontalBox();
+		box2 = Box.createHorizontalBox();
+		box3 = Box.createHorizontalBox();
 
-	    listArea4RecordListArea = new JList<>();
-	    listArea4RecordListArea.setBounds(10, 10, 500, 600);
-	    listArea4RecordListArea.setAutoscrolls(true);
-	    // add(box); //Can be deleted
-	    box2.add(new JScrollPane(listArea4RecordListArea));
+		txtArea4RecordTextArea = new JTextArea(500, 650);// original (500, 400)
+		txtArea4RecordTextArea.setEditable(false);
+//		txtArea4RecordTextArea.setLineWrap(true);//with this line on --> no horizontal JScrollPane
+		box1.add(new JScrollPane(txtArea4RecordTextArea));
 
-	 // Add both core-components of panel (for RecordBasic) and box to JTabbedPane
-	    tabbedPane = new JTabbedPane(); // Create JTabbedPane()
-	    tabbedPane.addTab(title4InputArea, null, contentPane, tip4InputArea);
-	    tabbedPane.addTab(title4TextArea, null, box1, tip4TextArea);
-	    tabbedPane.addTab(title4List, null, box2, tip4List);
-	    tabbedPane.addTab(title4JTable, null, box3, tip4JTable);
+		listArea4RecordListArea = new JList<>();
+		listArea4RecordListArea.setBounds(10, 10, 500, 600);
+		listArea4RecordListArea.setAutoscrolls(true);
+		// add(box); //Can be deleted
+		box2.add(new JScrollPane(listArea4RecordListArea));
 
-	    /**
-	     * google "JTabbedPane() color" Colorize a tab in a JTabbedPane using java swing
-	     * https://stackoverflow.com/questions/11333946/colorize-a-tab-in-a-jtabbedpane-using-java-swing
-	     */
-	    tabbedPane.setBackgroundAt(0, Color.CYAN);
-	    tabbedPane.setBackgroundAt(1, Color.GREEN);
-	    tabbedPane.setBackgroundAt(2, Color.YELLOW);
-	    tabbedPane.setBackgroundAt(3, Color.MAGENTA);
+		// Add both core-components of panel (for RecordBasic) and box to JTabbedPane
+		tabbedPane = new JTabbedPane();// Create JTabbedPane();
+		tabbedPane.addTab(title4InputArea, null, contentPane, tip4InputArea);
+		tabbedPane.addTab(title4TextArea, null, box1, tip4InputArea);
+		tabbedPane.addTab(title4List, null, box2, tip4List);
+		tabbedPane.addTab(title4JTable, null, box3, tip4JTable);
 
-	    getContentPane().add(tabbedPane);
+		tabbedPane.setBackgroundAt(0, Color.CYAN);
+		tabbedPane.setBackgroundAt(1, Color.GREEN);
+		tabbedPane.setBackgroundAt(2, Color.YELLOW);
+		tabbedPane.setBackgroundAt(3, Color.MAGENTA);
 
-	    setSize(712,750);
+		getContentPane().add(tabbedPane);
+
+		setSize(712, 760);
 	    setVisible(true);
 	    
 	}
@@ -315,389 +342,456 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 	 * Create the frame.
 	 */
 	protected void setupComponents4JPanel()  {
-		setTitle("Employee-Book Application (by TRLin 2023/11/08)");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 630, 659);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		lblTotalEmployees = new JLabel("Total Employees:");
+		lblTotalEmployees.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTotalEmployees.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblTotalEmployees.setBounds(445, 75, 104, 15);
+		contentPane.add(lblTotalEmployees);
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
-		btnSetProfile = new JButton("Set Profile");
-		btnSetProfile.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnSetProfile.setBackground(new Color(227, 227, 227));
-		btnSetProfile.setBounds(10, 10, 263, 29);
-		contentPane.add(btnSetProfile);
-
-		lblNewLabel = new JLabel("Company:");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblNewLabel.setBounds(10, 49, 74, 29);
-		contentPane.add(lblNewLabel);
-
-		JTextField textField = new JTextField();
-		textField.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 128), null, null));
-		textField.setBounds(94, 53, 179, 21);
-		contentPane.add(textField);
-		textField.setColumns(10);
-
-		btnClearProfileresults = new JButton("Clear Profile/Results");
-		btnClearProfileresults.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnClearProfileresults.setBackground(new Color(227, 227, 227));
-		btnClearProfileresults.setBounds(344, 10, 263, 29);
-		contentPane.add(btnClearProfileresults);
-
-		lblTotalEmployee = new JLabel("Total Employee:");
-		lblTotalEmployee.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblTotalEmployee.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		lblTotalEmployee.setBounds(340, 49, 90, 29);
-		contentPane.add(lblTotalEmployee);
-
-		JTextField textField_1 = new JTextField();
-		textField_1.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 128), null, null));
-		textField_1.setColumns(10);
-		textField_1.setBounds(440, 53, 163, 21);
-		contentPane.add(textField_1);
+		txtFieldEN = new JTextField();
+		txtFieldEN.setColumns(10);
+		txtFieldEN.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+						new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldEN.setBounds(559, 76, 96, 21);
+		contentPane.add(txtFieldEN);
 
 		separator = new JSeparator();
 		separator.setOpaque(true);
-		separator.setBackground(new Color(0, 64, 0));
-		separator.setForeground(new Color(0, 128, 0));
-		separator.setBounds(10, 88, 593, 3);
+		separator.setForeground(Color.GREEN);
+		separator.setBounds(new Rectangle(7, 7, 16, 16));
+		separator.setBackground(new Color(75, 0, 130));
+		separator.setBounds(29, 134, 626, 2);
 		contentPane.add(separator);
 
 		lblEarnings = new JLabel("Earnings:");
 		lblEarnings.setOpaque(true);
 		lblEarnings.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEarnings.setForeground(new Color(0, 0, 0));
-		lblEarnings.setBackground(new Color(255, 255, 128));
-		lblEarnings.setBounds(10, 113, 74, 29);
+		lblEarnings.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
+		lblEarnings.setBackground(new Color(250, 250, 210));
+		lblEarnings.setBounds(29, 166, 69, 29);
 		contentPane.add(lblEarnings);
 
-		JTextField textField_2 = new JTextField();
-		textField_2.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 128), null, null));
-		textField_2.setColumns(10);
-		textField_2.setBounds(94, 117, 96, 21);
-		contentPane.add(textField_2);
+		txtFieldEarnings = new JTextField();
+		txtFieldEarnings.setFocusable(false);
+		txtFieldEarnings.setEnabled(false);
+		txtFieldEarnings.setEditable(false);
+		txtFieldEarnings.setColumns(10);
+		txtFieldEarnings.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+						new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldEarnings.setBounds(108, 170, 96, 21);
+		contentPane.add(txtFieldEarnings);
 
-		btnClearRecord = new JButton("Clear Record");
-		btnClearRecord.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnClearRecord.setBackground(new Color(227, 227, 227));
-		btnClearRecord.setBounds(200, 116, 123, 29);
-		contentPane.add(btnClearRecord);
+		lblSSN = new JLabel("SSN:");
+		lblSSN.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSSN.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblSSN.setBounds(45, 245, 69, 29);
+		contentPane.add(lblSSN);
 
-		lblSsn = new JLabel("SSN:");
-		lblSsn.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblSsn.setForeground(Color.BLACK);
-		lblSsn.setBackground(new Color(255, 255, 128));
-		lblSsn.setBounds(10, 165, 74, 29);
-		contentPane.add(lblSsn);
+		txtFieldSSN = new JTextField();
+		txtFieldSSN.setColumns(10);
+		txtFieldSSN.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+						new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldSSN.setBounds(120, 249, 96, 21);
+		contentPane.add(txtFieldSSN);
 
 		lblFirstName = new JLabel("First Name:");
 		lblFirstName.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFirstName.setForeground(Color.BLACK);
-		lblFirstName.setBackground(new Color(255, 255, 255));
-		lblFirstName.setBounds(10, 196, 74, 29);
+		lblFirstName.setFont(new Font("Tines New Roman", Font.BOLD, 12));
+		lblFirstName.setBounds(45, 275, 69, 29);
 		contentPane.add(lblFirstName);
 
-		lblRightName = new JLabel("Right Name:");
-		lblRightName.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblRightName.setForeground(Color.BLACK);
-		lblRightName.setBackground(new Color(255, 255, 128));
-		lblRightName.setBounds(10, 227, 74, 29);
-		contentPane.add(lblRightName);
+		
+		txtFieldFN = new JTextField();
+		txtFieldFN.setColumns(10);
+		txtFieldFN.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+				        new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldFN.setBounds(120, 279, 96, 21);
+		contentPane.add(txtFieldFN);
 
-		JTextField textField_3 = new JTextField();
-		textField_3.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 128), null, null));
-		textField_3.setColumns(10);
-		textField_3.setBounds(94, 169, 96, 21);
-		contentPane.add(textField_3);
+		lblLastName = new JLabel("Last Name:");
+		lblLastName.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblLastName.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblLastName.setBounds(45, 310, 69, 29);
+		contentPane.add(lblLastName);
+		
+		txtFieldLN = new JTextField();
+		txtFieldLN.setColumns(10);
+		txtFieldLN.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+				        new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldLN.setBounds(120, 310, 96, 21);
+		contentPane.add(txtFieldLN);
+		
+		
+		lblEmpCounter = new JLabel("Employee Counter:");
+		lblEmpCounter.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEmpCounter.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblEmpCounter.setBounds(445, 208, 104, 29);
+		contentPane.add(lblEmpCounter);
 
-		JTextField textField_4 = new JTextField();
-		textField_4.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 160), null, null));
-		textField_4.setColumns(10);
-		textField_4.setBounds(94, 200, 96, 21);
-		contentPane.add(textField_4);
-
-		JTextField textField_5 = new JTextField();
-		textField_5.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 160), null, null));
-		textField_5.setBackground(new Color(255, 255, 255));
-		textField_5.setColumns(10);
-		textField_5.setBounds(94, 231, 96, 21);
-		contentPane.add(textField_5);
-
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setOpaque(true);
-		separator_1.setForeground(new Color(0, 128, 0));
-		separator_1.setBackground(new Color(0, 0, 128));
-		separator_1.setBounds(372, 113, 231, 3);
-		contentPane.add(separator_1);
-
-		separator_1_1 = new JSeparator();
-		separator_1_1.setOpaque(true);
-		separator_1_1.setForeground(new Color(0, 128, 0));
-		separator_1_1.setBackground(new Color(0, 0, 128));
-		separator_1_1.setBounds(372, 139, 231, 3);
-		contentPane.add(separator_1_1);
-
-		lblResultsArea = new JLabel("Results Area");
-		lblResultsArea.setHorizontalAlignment(SwingConstants.CENTER);
-		lblResultsArea.setForeground(Color.BLACK);
-		lblResultsArea.setBackground(new Color(255, 255, 128));
-		lblResultsArea.setBounds(372, 113, 231, 29);
-		contentPane.add(lblResultsArea);
-
-		lblEmployeeCounter = new JLabel("Employee Counter:");
-		lblEmployeeCounter.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblEmployeeCounter.setForeground(Color.BLACK);
-		lblEmployeeCounter.setBackground(new Color(255, 255, 128));
-		lblEmployeeCounter.setBounds(372, 165, 96, 29);
-		contentPane.add(lblEmployeeCounter);
-
-		JTextField textField_6 = new JTextField();
-		textField_6.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 160), null, null));
-		textField_6.setColumns(10);
-		textField_6.setBounds(478, 165, 125, 21);
-		contentPane.add(textField_6);
-
-		JTextField textField_7 = new JTextField();
-		textField_7.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 160), null, null));
-		textField_7.setColumns(10);
-		textField_7.setBounds(478, 208, 125, 21);
-		contentPane.add(textField_7);
+		txtFieldEmpCounter = new JTextField();
+		txtFieldEmpCounter.setEditable(false);
+		txtFieldEmpCounter.setColumns(10);
+		txtFieldEmpCounter.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+						new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldEmpCounter.setBounds(559, 212, 96, 21);
+		contentPane.add(txtFieldEmpCounter);
 
 		lblHighestEarnings = new JLabel("Highest Earnings:");
 		lblHighestEarnings.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblHighestEarnings.setForeground(Color.BLACK);
-		lblHighestEarnings.setBackground(new Color(255, 255, 128));
-		lblHighestEarnings.setBounds(372, 204, 96, 29);
+		lblHighestEarnings.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblHighestEarnings.setBounds(445, 242, 104, 29);
 		contentPane.add(lblHighestEarnings);
+
+		
+		txtFieldHighestE = new JTextField();
+		txtFieldHighestE.setEditable(false);
+		txtFieldHighestE.setColumns(10);
+		txtFieldHighestE.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175),null, null, null),
+				        new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldHighestE.setBounds(559, 246, 96, 21);
+		contentPane.add(txtFieldHighestE);
 
 		lblLowestEarnings = new JLabel("Lowest Earnings:");
 		lblLowestEarnings.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblLowestEarnings.setForeground(Color.BLACK);
-		lblLowestEarnings.setBackground(new Color(255, 255, 128));
-		lblLowestEarnings.setBounds(372, 243, 96, 29);
+		lblLowestEarnings.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblLowestEarnings.setBounds(445, 275, 104, 29);
 		contentPane.add(lblLowestEarnings);
 
-		JTextField textField_8 = new JTextField();
-		textField_8.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 160), null, null));
-		textField_8.setColumns(10);
-		textField_8.setBounds(478, 247, 125, 21);
-		contentPane.add(textField_8);
+		txtFieldLowestE = new JTextField();
+		txtFieldLowestE.setEditable(false);
+		txtFieldLowestE.setColumns(10);
+		txtFieldLowestE.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+						new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldLowestE.setBounds(559, 279, 96, 21);
+		contentPane.add(txtFieldLowestE);
+
+		txtFieldAverageE = new JTextField();
+		txtFieldAverageE.setEditable(false);
+		txtFieldAverageE.setColumns(10);
+		txtFieldAverageE.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+						new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldAverageE.setBounds(559, 314, 96, 21);
+		contentPane.add(txtFieldAverageE);
 
 		lblAverageEarnings = new JLabel("Average Earnings:");
+		lblAverageEarnings.setHorizontalTextPosition(SwingConstants.LEFT);
 		lblAverageEarnings.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblAverageEarnings.setForeground(Color.BLACK);
-		lblAverageEarnings.setBackground(new Color(255, 255, 128));
-		lblAverageEarnings.setBounds(372, 282, 96, 29);
+		lblAverageEarnings.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblAverageEarnings.setBounds(445, 310, 104, 29);
 		contentPane.add(lblAverageEarnings);
 
-		JTextField textField_9 = new JTextField();
-		textField_9.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 160), null, null));
-		textField_9.setColumns(10);
-		textField_9.setBounds(478, 286, 125, 21);
-		contentPane.add(textField_9);
+		separator_1 = new JSeparator();
+		separator_1.setOpaque(true);
+		separator_1.setForeground(Color.GREEN);
+		separator_1.setBounds(new Rectangle(7, 7, 16, 16));
+		separator_1.setBackground(new Color(75, 0, 130));
+		separator_1.setBounds(29, 411, 640, 2);
+		contentPane.add(separator_1);
 
-		separator_2 = new JSeparator();
-		separator_2.setForeground(new Color(0, 128, 0));
-		separator_2.setBackground(new Color(0, 64, 0));
-		separator_2.setBounds(10, 336, 593, 2);
-		contentPane.add(separator_2);
+		lblDistribution = new JLabel("Distribution of Wage-Levels");
+		lblDistribution.setOpaque(true);
+		lblDistribution.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDistribution.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 14));
+		lblDistribution.setBounds(new Rectangle(2, 2, 2, 2));
+		lblDistribution.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 0, 0), null, null, null));
+		lblDistribution.setBackground(new Color(175, 238, 238));
+		lblDistribution.setBounds(29, 426, 640, 29);
+		contentPane.add(lblDistribution);
 
-		JLabel lblDistributionOfWagelevels = new JLabel("Distribution of Wage-Levels");
-		lblDistributionOfWagelevels.setFont(new Font("Berlin Sans FB", Font.ITALIC, 12));
-		lblDistributionOfWagelevels.setOpaque(true);
-		lblDistributionOfWagelevels.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDistributionOfWagelevels.setForeground(Color.BLACK);
-		lblDistributionOfWagelevels.setBackground(new Color(0, 255, 255));
-		lblDistributionOfWagelevels.setBounds(10, 348, 593, 29);
-		contentPane.add(lblDistributionOfWagelevels);
-
-		lblUnit = new JLabel("Unit:");
-		lblUnit.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUnit.setForeground(Color.BLACK);
-		lblUnit.setBackground(new Color(255, 255, 128));
-		lblUnit.setBounds(10, 427, 74, 29);
-		contentPane.add(lblUnit);
-
-		lblAlevel = new JLabel("A_Level>=");
+		lblAlevel = new JLabel("A_Level  >=");
 		lblAlevel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblAlevel.setForeground(Color.BLACK);
-		lblAlevel.setBackground(new Color(255, 255, 128));
-		lblAlevel.setBounds(199, 388, 74, 29);
+		lblAlevel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblAlevel.setBounds(238, 465, 69, 29);
 		contentPane.add(lblAlevel);
 
-		lblBlevel = new JLabel("B_Level  =");
+		txtFieldLA = new JTextField();
+		txtFieldLA.setEditable(false);
+		txtFieldLA.setColumns(10);
+		txtFieldLA.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+						new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldLA.setBackground(new Color(255, 228, 225));		
+		txtFieldLA.setBounds(505, 469, 96, 21);
+		contentPane.add(txtFieldLA);
+
+		lblBlevel = new JLabel("B_Level   =");
 		lblBlevel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblBlevel.setForeground(Color.BLACK);
-		lblBlevel.setBackground(new Color(255, 255, 128));
-		lblBlevel.setBounds(199, 427, 74, 29);
+		lblBlevel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblBlevel.setBounds(238, 504, 69, 29);
 		contentPane.add(lblBlevel);
 
-		lblClevel = new JLabel("C_Level<=");
+		txtFieldLB = new JTextField();
+		txtFieldLB.setEditable(false);
+		txtFieldLB.setColumns(10);
+		txtFieldLB.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+						new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldLB.setBackground(new Color(255, 228, 225));
+		txtFieldLB.setBounds(505, 508, 96, 21);
+		contentPane.add(txtFieldLB);
+
+		lblClevel = new JLabel("C_Level  <=");
 		lblClevel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblClevel.setForeground(Color.BLACK);
-		lblClevel.setBackground(new Color(255, 255, 128));
-		lblClevel.setBounds(199, 473, 74, 29);
+		lblClevel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblClevel.setBounds(238, 537, 69, 29);
 		contentPane.add(lblClevel);
 
-		JLabel lblThousand = new JLabel("Thousand");
-		lblThousand.setOpaque(true);
-		lblThousand.setHorizontalAlignment(SwingConstants.CENTER);
-		lblThousand.setForeground(Color.BLACK);
-		lblThousand.setBackground(new Color(255, 255, 0));
-		lblThousand.setBounds(116, 427, 74, 29);
-		contentPane.add(lblThousand);
+		txtFieldLC = new JTextField();
+		txtFieldLC.setEditable(false);
+		txtFieldLC.setColumns(10);
+		txtFieldLC.setBorder(
+				new CompoundBorder(new BevelBorder(BevelBorder.RAISED, new Color(255, 175, 175), null, null, null),
+						new BevelBorder(BevelBorder.RAISED, new Color(0, 255, 0), null, null, null)));
+		txtFieldLC.setBackground(new Color(255, 228, 225));
+		txtFieldLC.setBounds(505, 541, 96, 21);
+		contentPane.add(txtFieldLC);
 
-		JTextField textField_10 = new JTextField();
-		textField_10.setColumns(10);
-		textField_10.setBackground(new Color(255, 255, 191));
-		textField_10.setBounds(295, 392, 126, 21);
-		contentPane.add(textField_10);
+		lblALowerThreshold = new JLabel("");
+		lblALowerThreshold.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.BLUE));
+		lblALowerThreshold.setOpaque(true);
+		lblALowerThreshold.setHorizontalAlignment(SwingConstants.CENTER);
+		lblALowerThreshold.setForeground(new Color(0, 0, 0));
+		lblALowerThreshold.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblALowerThreshold.setBackground(new Color(250, 250, 210));
+		lblALowerThreshold.setBounds(344, 465, 119, 29);
+		contentPane.add(lblALowerThreshold);
 
-		JTextField textField_11 = new JTextField();
-		textField_11.setColumns(10);
-		textField_11.setBackground(new Color(255, 255, 191));
-		textField_11.setBounds(295, 431, 41, 21);
-		contentPane.add(textField_11);
+		lblBLowerThreshold = new JLabel("");
+		lblBLowerThreshold.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.BLUE));
+		lblBLowerThreshold.setOpaque(true);
+		lblBLowerThreshold.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBLowerThreshold.setForeground(new Color(0, 0, 0));
+		lblBLowerThreshold.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblBLowerThreshold.setBackground(new Color(250, 250, 210));
+		lblBLowerThreshold.setBounds(344, 502, 33, 29);
+		contentPane.add(lblBLowerThreshold);
 
-		JTextField textField_12 = new JTextField();
-		textField_12.setColumns(10);
-		textField_12.setBackground(new Color(255, 255, 191));
-		textField_12.setBounds(380, 431, 41, 21);
-		contentPane.add(textField_12);
+		lblCUpperThreshold = new JLabel("");
+		lblCUpperThreshold.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		lblCUpperThreshold.setOpaque(true);
+		lblCUpperThreshold.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCUpperThreshold.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblCUpperThreshold.setBackground(new Color(250, 250, 210));
+		lblCUpperThreshold.setBounds(344, 537, 119, 29);
+		contentPane.add(lblCUpperThreshold);
 
-		JTextField textField_13 = new JTextField();
-		textField_13.setColumns(10);
-		textField_13.setBackground(new Color(255, 255, 191));
-		textField_13.setBounds(295, 477, 126, 21);
-		contentPane.add(textField_13);
+		lblBUpperThreshold = new JLabel("");
+		lblBUpperThreshold.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.BLUE));
+		lblBUpperThreshold.setOpaque(true);
+		lblBUpperThreshold.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBUpperThreshold.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblBUpperThreshold.setBackground(new Color(250, 250, 210));
+		lblBUpperThreshold.setBounds(430, 502, 33, 29);
+		contentPane.add(lblBUpperThreshold);
 
-		lblUnit_1 = new JLabel("~");
-		lblUnit_1.setOpaque(true);
-		lblUnit_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUnit_1.setForeground(Color.BLACK);
-		lblUnit_1.setBackground(new Color(255, 255, 191));
-		lblUnit_1.setBounds(344, 433, 27, 15);
-		contentPane.add(lblUnit_1);
+		lblRange = new JLabel("~");
+		lblRange.setOpaque(true);
+		lblRange.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRange.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblRange.setBackground(new Color(250, 250, 210));
+		lblRange.setBounds(387, 502, 33, 29);
+		contentPane.add(lblRange);
 
-		JTextField textField_14 = new JTextField();
-		textField_14.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 160), null, null));
-		textField_14.setBackground(new Color(255, 198, 198));
-		textField_14.setColumns(10);
-		textField_14.setBounds(478, 387, 96, 21);
-		contentPane.add(textField_14);
+		lblUnitSymbol = new JLabel("Unit:");
+		lblUnitSymbol.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblUnitSymbol.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblUnitSymbol.setBounds(46, 502, 43, 33);
+		contentPane.add(lblUnitSymbol);
 
-		JTextField textField_15 = new JTextField();
-		textField_15.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 160), null, null));
-		textField_15.setBackground(new Color(255, 198, 198));
-		textField_15.setColumns(10);
-		textField_15.setBounds(478, 431, 96, 21);
-		contentPane.add(textField_15);
+		separator_2 = new JSeparator();
+		separator_2.setOpaque(true);
+		separator_2.setForeground(Color.GREEN);
+		separator_2.setBounds(new Rectangle(7, 7, 16, 16));
+		separator_2.setBackground(new Color(75, 0, 130));
+		separator_2.setBounds(29, 576, 626, 2);
+		contentPane.add(separator_2);
 
-		JTextField textField_16 = new JTextField();
-		textField_16.setBorder(
-				new BevelBorder(BevelBorder.LOWERED, new Color(0, 255, 0), new Color(0, 0, 160), null, null));
-		textField_16.setColumns(10);
-		textField_16.setBackground(new Color(255, 198, 198));
-		textField_16.setBounds(478, 477, 96, 21);
-		contentPane.add(textField_16);
-
-		JSeparator separator_2_1 = new JSeparator();
-		separator_2_1.setForeground(new Color(0, 128, 0));
-		separator_2_1.setBackground(new Color(0, 64, 0));
-		separator_2_1.setBounds(10, 512, 593, 2);
-		contentPane.add(separator_2_1);
-
-		btnCalculate = new JButton("Calculate");
-		btnCalculate.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnCalculate.setBackground(new Color(227, 227, 227));
-		btnCalculate.setBounds(10, 524, 96, 29);
+//		Icon calculateIcon = new ImageIcon();
+		btnCalculate = new JButton((Icon) null /* Calculate */);
+		btnCalculate.setHorizontalAlignment(SwingConstants.CENTER);
+		btnCalculate.setText("Calculate");
+		btnCalculate.setToolTipText("Calculate");
+		btnCalculate.setEnabled(false);
+		btnCalculate.setForeground(new Color(0, 0, 0));
+		btnCalculate.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnCalculate.setBackground(new Color(255, 192, 203));
+		btnCalculate.setBounds(29, 603, 122, 30);
 		contentPane.add(btnCalculate);
 
-		btnOpenFile = new JButton("Open File");
-		btnOpenFile.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnOpenFile.setBackground(new Color(227, 227, 227));
-		btnOpenFile.setBounds(10, 575, 96, 29);
-		contentPane.add(btnOpenFile);
-
-		btnOutputToTextArea = new JButton("Output to TextArea");
-		btnOutputToTextArea.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnOutputToTextArea.setBackground(new Color(227, 227, 227));
-		btnOutputToTextArea.setBounds(141, 524, 145, 29);
-		contentPane.add(btnOutputToTextArea);
-
-		btnPieChartDemo = new JButton("Pie-Chart Demo");
-		btnPieChartDemo.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnPieChartDemo.setBackground(new Color(227, 227, 227));
-		btnPieChartDemo.setBounds(334, 524, 145, 29);
-		contentPane.add(btnPieChartDemo);
-
-		btnRefresh = new JButton("Refresh");
-		btnRefresh.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnRefresh.setBackground(new Color(227, 227, 227));
-		btnRefresh.setBounds(513, 524, 90, 29);
+		btnRefresh = new JButton("Refresh"); //Button-Refresh-ICONIFIED 24x24.ong
+		btnRefresh.setToolTipText("Refresh");
+		btnRefresh.setHorizontalAlignment(SwingConstants.CENTER);
+		btnRefresh.setForeground(new Color(0, 0, 0));
+		btnRefresh.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnRefresh.setBackground(new Color(255, 192, 203));
+		btnRefresh.setBounds(523, 603, 146, 30);
 		contentPane.add(btnRefresh);
 
-		btnWriteFile = new JButton("Write File");
-		btnWriteFile.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnWriteFile.setBackground(new Color(227, 227, 227));
-		btnWriteFile.setBounds(141, 575, 104, 29);
+//		Icon outputAllIcon = new ImageIcon();
+		btnOutputAll = new JButton((Icon) null /* Output to TextArea */);
+		btnOutputAll.setToolTipText("COutput to Text Area");
+		btnOutputAll.setText("Output Results");
+		btnOutputAll.setHorizontalAlignment(SwingConstants.CENTER);
+		btnOutputAll.setEnabled(false);
+		btnOutputAll.setForeground(new Color(0, 0, 0));
+		btnOutputAll.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnOutputAll.setBackground(new Color(255, 192, 203));
+		btnOutputAll.setBounds(161, 603, 184, 30);
+		contentPane.add(btnOutputAll);
+
+//		Icon openIcon = new ImageIcon();
+		btnOpenFile = new JButton((Icon) null /* Open File */);
+		btnOpenFile.setText("Open File");
+		btnOpenFile.setToolTipText("Open File");
+		btnOpenFile.setHorizontalAlignment(SwingConstants.CENTER);
+		btnOpenFile.setForeground(new Color(0, 0, 0));
+		btnOpenFile.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnOpenFile.setBackground(new Color(255, 192, 203));
+		btnOpenFile.setBounds(29, 657, 122, 30);
+		contentPane.add(btnOpenFile);
+
+//		Icon writeIcon = new ImageIcon();
+		btnWriteFile = new JButton((Icon) null /* Write File */);
+		btnWriteFile.setText("Write File");
+		btnWriteFile.setHorizontalAlignment(SwingConstants.CENTER);
+		btnWriteFile.setToolTipText("Write File");
+//		btnWriteFile.setIcon(new ImageIcon(EmployeeBaseJFrame_V4.class.getResource("")));
+		btnWriteFile.setForeground(new Color(0, 0, 0));
+		btnWriteFile.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnWriteFile.setBackground(new Color(255, 192, 203));
+		btnWriteFile.setBounds(161, 657, 125, 30);
 		contentPane.add(btnWriteFile);
 
 		btnReadFile = new JButton("Read File");
-		btnReadFile.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnReadFile.setBackground(new Color(227, 227, 227));
-		btnReadFile.setBounds(266, 575, 96, 29);
+		btnReadFile.setHorizontalAlignment(SwingConstants.CENTER);
+		btnReadFile.setToolTipText("Read File");
+		btnReadFile.setForeground(new Color(0, 0, 0));
+		btnReadFile.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnReadFile.setBackground(new Color(255, 192, 203));
+		btnReadFile.setBounds(433, 657, 124, 30);
 		contentPane.add(btnReadFile);
 
-		btnCloseFile = new JButton("Close File");
-		btnCloseFile.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnCloseFile.setBackground(new Color(227, 227, 227));
-		btnCloseFile.setBounds(380, 575, 99, 29);
+//		Icon closeIcon = new ImageIcon();
+		btnCloseFile = new JButton((Icon) null /* Close File */);
+		btnCloseFile.setText("Close File");
+		btnCloseFile.setHorizontalAlignment(SwingConstants.CENTER);
+		btnCloseFile.setToolTipText("Close File");
+		btnCloseFile.setForeground(new Color(0, 0, 0));
+		btnCloseFile.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnCloseFile.setBackground(new Color(255, 192, 203));
+		btnCloseFile.setBounds(296, 657, 129, 30);
 		contentPane.add(btnCloseFile);
 
-		btnExit = new JButton("Exit");
-		btnExit.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 255), null, null, null));
-		btnExit.setBackground(new Color(227, 227, 227));
-		btnExit.setBounds(513, 575, 90, 29);
+		btnPieChartDemo = new JButton("Pie-Chart Demo");
+		btnPieChartDemo.setHorizontalAlignment(SwingConstants.CENTER);
+		btnPieChartDemo.setToolTipText("Pie-Chart Demo");
+		btnPieChartDemo.setForeground(new Color(0, 0, 0));
+		btnPieChartDemo.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnPieChartDemo.setBackground(new Color(255, 192, 203));
+		btnPieChartDemo.setBounds(355, 603, 158, 30);
+		contentPane.add(btnPieChartDemo);
+
+//		Icon exitIcon = new ImageIcon();
+		btnExit = new JButton((Icon) null /* "Exit" */);
+		btnExit.setToolTipText("Exit");
+		btnExit.setText("Exit");
+		btnExit.setHorizontalAlignment(SwingConstants.CENTER);
+		btnExit.setForeground(new Color(0, 0, 0));
+		btnExit.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnExit.setBackground(new Color(255, 192, 203));
+		btnExit.setBounds(567, 657, 102, 30);
 		contentPane.add(btnExit);
+
+		btnClearRecord = new JButton("Clear Record");
+		btnClearRecord.setHorizontalAlignment(SwingConstants.CENTER);
+		btnClearRecord.setToolTipText("Clear Record");
+//		btnClearRecord.setIcon(new ImageIcon(""));
+		btnClearRecord.setForeground(new Color(0, 0, 0));
+		btnClearRecord.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnClearRecord.setBackground(new Color(211, 211, 211));
+		btnClearRecord.setBounds(214, 170, 147, 30);
+		contentPane.add(btnClearRecord);
+
+		lblResultArea = new JLabel("Results Area");
+		lblResultArea.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResultArea.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		lblResultArea.setBounds(445, 169, 210, 29);
+		contentPane.add(lblResultArea);
+
+		separatorResultTop = new JSeparator();
+		separatorResultTop.setOrientation(SwingConstants.VERTICAL);
+		separatorResultTop.setOpaque(true);
+		separatorResultTop.setForeground(Color.GREEN);
+		separatorResultTop.setBounds(new Rectangle(7, 7, 16, 16));
+		separatorResultTop.setBackground(new Color(75, 0, 130));
+		separatorResultTop.setBounds(445, 166, 210, 3);
+		contentPane.add(separatorResultTop);
+
+		separatorResultBottom = new JSeparator();
+		separatorResultBottom.setOrientation(SwingConstants.VERTICAL);
+		separatorResultBottom.setOpaque(true);
+		separatorResultBottom.setForeground(Color.GREEN);
+		separatorResultBottom.setBounds(new Rectangle(7, 7, 16, 16));
+		separatorResultBottom.setBackground(new Color(75, 0, 130));
+		separatorResultBottom.setBounds(445, 203, 210, 3);
+		contentPane.add(separatorResultBottom);
+
+//		Icon setProfileIcon = new ImageIcon();
+		btnSetProfile = new JButton("Set Profile");
+		btnSetProfile.setHorizontalAlignment(SwingConstants.CENTER);
+		btnSetProfile.setText("Set Profile");
+		btnSetProfile.setToolTipText("Set Profile");
+		btnSetProfile.setForeground(new Color(0, 0, 0));
+		btnSetProfile.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnSetProfile.setBackground(new Color(255, 192, 203));
+		btnSetProfile.setBounds(29, 23, 210, 30);
+		contentPane.add(btnSetProfile);
+
+		btnClearProfile = new JButton("Clear Profile/Results");
+		btnClearProfile.setToolTipText("Clear Profile/Results");
+		btnClearProfile.setForeground(new Color(0, 0, 0));
+		btnClearProfile.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		btnClearProfile.setBackground(new Color(255, 192, 203));
+		btnClearProfile.setBounds(445, 23, 210, 30);
+		contentPane.add(btnClearProfile);
+
+		lblUnit = new JLabel("Thousand");
+		lblUnit.setOpaque(true);
+		lblUnit.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUnit.setFont(new Font("Yu Gothic Light", Font.BOLD, 12));
+		lblUnit.setBackground(Color.YELLOW);
+		lblUnit.setBounds(96, 504, 96, 29);
+		contentPane.add(lblUnit);
 	}
 	protected void initializeButtonArray() {
-	    JButton[] buttonsInitialized = {
-	        btnCalculate, btnRefresh, btnClearRecord, btnSetProfile,btnClearProfileresults,
-	        btnOutputToTextArea, btnExit, btnOpenFile, btnReadFile, btnWriteFile, btnCloseFile, btnPieChartDemo 
-	    };
-
+		JButton[] buttonsInitialized = { btnCalculate, btnRefresh, btnClearRecord, btnSetProfile, btnClearProfile,
+				btnOutputAll, btnExit, btnOpenFile, btnReadFile, btnWriteFile, btnCloseFile, btnPieChartDemo };
 	    optionButtons = buttonsInitialized;
 	    for (int i = 0; i < basicChoices.length; i++) {
-	        optionButtons[i].setIcon(new ImageIcon(EmployeeBaseJFrame_V0.class.getResource(basicChoices[i].getImageIcon())));
-	        optionButtons[i].setText(basicChoices[i].getButtonType());
-	        System.out.println("i=" + i + " " + basicChoices[i].getImageIcon());
+	        //optionButtons[i].setIcon(new ImageIcon(EmployeeBaseJFrame_V0.class.getResource(basicChoices[i].getImageIcon())));
+			optionButtons[i].setIcon(new ImageIcon((basicChoices[i].getImageIcon())));
+			optionButtons[i].setText(basicChoices[i].getButtonType());
+			System.out.println("i=" + basicChoices[i].getImageIcon());
 
 	        contentPane.add(optionButtons[i]); //I believe this line is no need. Confirm later
 	    }
 	} // end initializeButtonArray()
 
 	protected void initializeTextFieldArrayList() {
-	    JTextField[] txtFieldsProfile = { textField, textField_1 };
-	    JTextField[] txtFieldsEmployee = { textField_3, textField_4, textField_5, textField_2 };
-	    JTextField[] txtFieldsOutput = { textField_6, textField_8, textField_7, textField_9, 
-	    		textField_14, textField_15, textField_16 };
+		JTextField[] txtFieldsProfile = { txtFieldCN, txtFieldEN };
+		JTextField[] txtFieldsEmployee = { txtFieldSSN, txtFieldFN, txtFieldLN, txtFieldEarnings };
+		JTextField[] txtFieldsOutpu = { txtFieldEmpCounter, txtFieldLowestE, txtFieldHighestE, txtFieldAverageE,
+				txtFieldLA, txtFieldLB, txtFieldLC };
 	    
 	    for (JTextField txtField : txtFieldsProfile) {
 	        //txtField.setInputVerifier(verifier4SuperEmployeeBase); // for verification
@@ -711,7 +805,7 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 	        //contentPane.add(txtField);
 	    }
 
-	    for (JTextField txtField : txtFieldsOutput) {
+	    for (JTextField txtField : txtFieldsOutpu) {
 	        listTxtFieldsResultsG.add(txtField);
 	        //contentPane.add(txtField);
 	    }
@@ -720,17 +814,17 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 
 	
 	
-	protected void pluginVerifier4TextFieldArrayList() {
-	    for (JTextField txtField : listTxtFieldsEmployeeG) {
-	        txtField.setInputVerifier(verifier4Employee); // for verification
-	    }
-	    // listTxtFieldsEmployeeG
-
-	    for (JTextField txtField : listTxtFieldsProfileG) {
-	        txtField.setInputVerifier(verifier4Employee); // for verification
-	    }
-	    // listTxtFieldsProfileG
-	}
+//	protected void pluginVerifier4TextFieldArrayList() {
+//	    for (JTextField txtField : listTxtFieldsEmployeeG) {
+//	        txtField.setInputVerifier(verifier4Employee); // for verification
+//	    }
+//	    // listTxtFieldsEmployeeG
+//
+//	    for (JTextField txtField : listTxtFieldsProfileG) {
+//	        txtField.setInputVerifier(verifier4Employee); // for verification
+//	    }
+//	    // listTxtFieldsProfileG
+//	}
 
 	public void initializeTitleNamesList4JTable() {
 	    String[] titleNames4Table = { 
@@ -754,71 +848,69 @@ public class EmployeeBaseJFrame_V0 extends JFrame {
 	    }
 	    
 	    
-	    static void initLookAndFeel(Class<?> resourceBase) {
-	        SynthLookAndFeel lookAndFeel = new SynthLookAndFeel();
+		static void initLookAndFeel(Class<?> resourceBase) {
+//			static Void initLookAndFeel(EmployeeBaseJFrame_V4 resourceBase) {
+			SynthLookAndFeel lookAndFeel = new SynthLookAndFeel();
 
-	        try {
-	            // SynthLookAndFeel load() method throws a checked exception
-	            // (java.text.ParseException) so it must be handled
+			try {
+//				lookAndFeel.load(EmployeeBaseJFrame_V4.class.getResourceAsStream("synthDemo.xml"), EmployeeBaseJFrame_V4.class);
+				lookAndFeel.load(resourceBase.getResourceAsStream("synthDemo.xml"), resourceBase);
 
-	            //lookAndFeel.load(EmployeeBaseJFrame.class.getResourceAsStream("synthDemo.xml"), EmployeeBaseJFrame.class);
-	            lookAndFeel.load(resourceBase.getResourceAsStream("synthDemo.xml"), resourceBase);
+//				lookAndFeel.load(EmployeeBaseJFrame_V4.class.getResourceAsStream("synthDemo.xml"),resourceBase);
 
-	            UIManager.setLookAndFeel(lookAndFeel);
-	        } catch (Exception e) {
-	            System.err.println("Couldn't get specified look and feel (" + lookAndFeel + "), for some reason.");
-	            System.err.println("Using the default look and feel.");
-	            e.printStackTrace();
-	        }
-	    }
+				UIManager.setLookAndFeel(lookAndFeel);
+			} catch (Exception e) {
+				System.err.println("Couldn't get specified look and feel (" + lookAndFeel + "), for some reason.");
+				System.err.println("Using the default look and feel.");
+				e.printStackTrace();
+			}
+		}
 
 	    
-	    protected void setupMenubarWithLookAndFeel(int _x, int _y, int _width, int _height, Class<?> resourceBase, Component component) {
-	        menuBar = new JMenuBar();
-	        menuBar.setMargin(new Insets(4, 4, 4, 4));
-	        menuBar.setBackground(Color.CYAN);
-	        menuBar.setBounds(_x, _y, _width, _height); // e.g. menuBar.setBounds(300, 0, 115, 35);
-	        contentPane.add(menuBar);
+		protected void setupMenubarWithLookAndFeel(int _x, int _y, int _width, int _height, Class<?> resourceBase,Component component) {
+//		    protected void setupMenubarWithLookAndFeel(int _x, int _y, int _width, int _height, EmployeeBaseJFrame resourceBase,
+//		    		Component component) {
+				menuBar = new JMenuBar();
+				menuBar.setMargin(new Insets(4, 4, 4, 4));
+				menuBar.setBackground(Color.CYAN);
+				menuBar.setBounds(_x, _y, _width, _height); //e.g. menuBar.setBounds(300, 0, 115, 35);
+				contentPane.add(menuBar);
 
-	        mnLookFeel = new JMenu(" Look&Feel");
-	        mnLookFeel.setHorizontalAlignment(SwingConstants.CENTER);
-	        mnLookFeel.setPreferredSize(new Dimension(115, 22));
-	        mnLookFeel.setToolTipText("Change LOOK & FEEL");
-	        mnLookFeel.setBounds(new Rectangle(3, 3, 3, 3));
-	        mnLookFeel.setFont(new Font("Segoe UI Black", Font.BOLD | Font.ITALIC, 12));
-	        mnLookFeel.setBorderPainted(true);
-	        mnLookFeel.setBackground(new Color(255, 182, 193));
-	        mnLookFeel.setBorder(new BevelBorder(BevelBorder.RAISED, Color.YELLOW, 
-	        		Color.BLUE, new Color(255, 250, 205), new Color(135, 206, 235)));
-	        
-	        buttonGroup = new ButtonGroup();
-	        final UIManager.LookAndFeelInfo[] info = UIManager.getInstalledLookAndFeels();
-	        for (int i = 0; i < info.length; i++) {
-	            JRadioButtonMenuItem item = new JRadioButtonMenuItem(info[i].getName(), i == 4); // i == 0 original
-	            item.setForeground(new Color(200, 0, 200)); 
-	            item.setBackground(new Color(200, 255, 200));
-	            final String className = info[i].getClassName();
-	            System.out.println(className);
+				mnLookFeel = new JMenu("  Look&Feel");
+				mnLookFeel.setHorizontalAlignment(SwingConstants.CENTER);
+				mnLookFeel.setPreferredSize(new Dimension(115, 22));
+				mnLookFeel.setToolTipText("Chanfe LOOK & FEEL");
+				mnLookFeel.setBounds(new Rectangle(3, 3, 3, 3));
+				mnLookFeel.setFont(new Font("Segoe UI Black", Font.BOLD | Font.ITALIC, 12));
+				mnLookFeel.setBorderPainted(true);
+				mnLookFeel.setBackground(new Color(255, 182, 193));
+				mnLookFeel.setBorder(new BevelBorder(BevelBorder.RAISED, Color.YELLOW, Color.BLUE, new Color(255, 250, 205),
+						new Color(135, 206, 235)));
 
-	            item.addActionListener(new ActionListener() {
-	                public void actionPerformed(ActionEvent ae) {
-	                    try {
-	                        UIManager.setLookAndFeel(className);
-	                    } catch (Exception e) {
-	                        System.out.println(e);
-	                    }
-	                    SwingUtilities.updateComponentTreeUI(/*resourceBase*/component); // modified by using Component to this for the
-	                    // consideration of re-use in inheritance
-	                    /*
-	                    * SwingUtilities.updateComponentTreeUI(EmployeeBaseJFrame.this); // It was old
-	                    * one. (OK; but it won't do nay good for re-use consideration)
-	                    */
-	                    classNameCurrent = className;
-	                }
-	            });
-	            buttonGroup.add(item);
-	            mnLookFeel.add(item);
-	        }
+				buttonGroup = new ButtonGroup();
+				final UIManager.LookAndFeelInfo[] info = UIManager.getInstalledLookAndFeels();
+				for (int i = 0; i < info.length; i++) {
+					JRadioButtonMenuItem item = new JRadioButtonMenuItem(info[i].getName(), i == 4);// i == 0    original
+					item.setForeground(new Color(200, 0, 200)); //added by Wu
+					item.setBackground(new Color(200, 255, 200));
+					final String className = info[i].getClassName();
+
+					System.out.println(className);
+
+					item.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent ae) {
+							try {
+								UIManager.setLookAndFeel(className);
+							} catch (Exception e) {
+								System.out.println(e);
+							}
+							SwingUtilities.updateComponentTreeUI(component);
+							classNameCurrent = className;
+						}
+					});
+					buttonGroup.add(item);
+					mnLookFeel.add(item);
+				}
 	        
 	        
 	        itemCustom = new JRadioButtonMenuItem("Custom", false);

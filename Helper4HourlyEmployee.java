@@ -12,17 +12,17 @@ import Lin.polymorphism.employee.CommissionEmployee;
 import Lin.polymorphism.employee.Employee;
 import Lin.polymorphism.employee.HourlyEmployee;
 import Lin.payablesys.employeetype.earningbook.EmployeeBaseBook;
-import Lin.polymorphism.employee.frame.CommissionEmployeeJFrame_V1;
-import Lin.polymorphism.employee.frame.HourlyEmployeeJFrame;
+import Lin.polymorphism.employee.frame.CommissionEmployeeJFrame_231108;
+import Lin.polymorphism.employee.frame.HourlyEmployeeJFrame_V0;
 import Lin.polymorphism.employee.menuoption.EmployeeRecordIndices;
 // import io.swingtest.app18.table.TableDemoPayrollSystem_23July19_v3;
 // import io.swingtest2.app108.TableDemoPayrollSystem_23July19_v2;
 
 public class Helper4HourlyEmployee extends Helper4SuperEmployeeBase {
 
-	public Helper4HourlyEmployee(/* Component component */HourlyEmployeeJFrame component) {
+	public Helper4HourlyEmployee(/* Component component */HourlyEmployeeJFrame_V0 component) {
 		super(component);
-		frameEmployee = (HourlyEmployeeJFrame) component;
+		frameEmployee = (HourlyEmployeeJFrame_V0) component;
 	}
 
 	@Override
@@ -30,44 +30,44 @@ public class Helper4HourlyEmployee extends Helper4SuperEmployeeBase {
         super.checkInputRecordData();
         if (checkRecord) {
             checkRecord = validationNumber_GUI.checkNumberValueByComparing_iflag(
-                ((HourlyEmployeeJFrame) frameEmployee).txtFieldHourlyWage.getText(),
+                ((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldHourlyWage.getText(),
                 EmployeeRecordIndices.HOURLY_WAGE.getRecordIndexType(), 0, 1,
                 NumberType_MenuOption.DOUBLE_NUMBER_TYPE.getValueIndex());
 
         if (!checkRecord)
-            ((HourlyEmployeeJFrame) frameEmployee).txtFieldHourlyWage.setText("");
+            ((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldHourlyWage.setText("");
     }
 	if(checkRecord){
 		checkRecord = validationNumber_GUI.checkNumberValueInRange_min0maxON1(
-				((HourlyEmployeeJFrame) frameEmployee).txtFieldRate4ExtraHours.getText(),
+				((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldRate4ExtraHours.getText(),
 				EmployeeRecordIndices.EXTRA_HOURS_RATE.getRecordIndexType(), 
 				min4rateOfExtraHours, max4rateOfExtraHours,false, false, 
 				NumberType_MenuOption.DOUBLE_NUMBER_TYPE.getValueIndex());
 	if (!checkRecord)
-	    ((HourlyEmployeeJFrame) frameEmployee).txtFieldRate4ExtraHours.setText("");
+	    ((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldRate4ExtraHours.setText("");
 }
 	
 	if (checkRecord) {
 	    checkRecord = validationNumber_GUI.checkNumberValueInRange_min0maxON1(
-	        ((HourlyEmployeeJFrame) frameEmployee).txtFieldMaxHWorked.getText(),
+	        ((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldMaxHWorked.getText(),
 	        EmployeeRecordIndices.MAX_WORKED_HOURS.getRecordIndexType(), 0.0,
 	        /*MAX_WORKED_HOURS*/EmployeeRecordIndices.MAX_WORKED_HOURS.getValue(), false, false,
 	        NumberType_MenuOption.DOUBLE_NUMBER_TYPE.getValueIndex());
 	}
 
 	if (!checkRecord)
-	    ((HourlyEmployeeJFrame) frameEmployee).txtFieldMaxHWorked.setText("");
+	    ((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldMaxHWorked.setText("");
 
 	if (checkRecord) {
-	    _maxHoursPerWeek = Double.parseDouble(((HourlyEmployeeJFrame) frameEmployee).txtFieldMaxHWorked.getText());
+	    _maxHoursPerWeek = Double.parseDouble(((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldMaxHWorked.getText());
 
 	    checkRecord = validationNumber_GUI.checkNumberValueInRange_min0maxON1(
-	        ((HourlyEmployeeJFrame) frameEmployee).txtFieldHoursWorked.getText(),
+	        ((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldHoursWorked.getText(),
 	        EmployeeRecordIndices.HOURS_WORKED.getRecordIndexType(), 0.0, _maxHoursPerWeek, true, true,
 	        NumberType_MenuOption.DOUBLE_NUMBER_TYPE.getValueIndex());
 
 	    if (!checkRecord)
-	        ((HourlyEmployeeJFrame) frameEmployee).txtFieldHoursWorked.setText("");
+	        ((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldHoursWorked.setText("");
 	}
 	}// end checkInputRecordData()
 
@@ -76,9 +76,9 @@ public class Helper4HourlyEmployee extends Helper4SuperEmployeeBase {
 	public void getInputDataReady(boolean _checkRecord) {
 	    super.getInputDataReady(_checkRecord);
 	    if (_checkRecord) {
-	        _hourlyWage = Double.parseDouble(((HourlyEmployeeJFrame) frameEmployee).txtFieldHourlyWage.getText());
-	        _rate4ExtraHours = Double.parseDouble(((HourlyEmployeeJFrame) frameEmployee).txtFieldRate4ExtraHours.getText());
-	        _hoursWorked = Double.parseDouble(((HourlyEmployeeJFrame) frameEmployee).txtFieldHoursWorked.getText());
+	        _hourlyWage = Double.parseDouble(((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldHourlyWage.getText());
+	        _rate4ExtraHours = Double.parseDouble(((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldRate4ExtraHours.getText());
+	        _hoursWorked = Double.parseDouble(((HourlyEmployeeJFrame_V0) frameEmployee).txtFieldHoursWorked.getText());
 	    }
 	}
 

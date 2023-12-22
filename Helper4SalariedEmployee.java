@@ -12,18 +12,18 @@ import Lin.polymorphism.employee.CommissionEmployee;
 import Lin.polymorphism.employee.Employee;
 import Lin.polymorphism.employee.SalariedEmployee;
 import Lin.payablesys.employeetype.earningbook.EmployeeBaseBook;
-import Lin.polymorphism.employee.frame.CommissionEmployeeJFrame_V1;
+import Lin.polymorphism.employee.frame.CommissionEmployeeJFrame_231108;
 import Lin.polymorphism.employee.menuoption.EmployeeRecordIndices;
 // import io.swingtest2.jtable.TableDemo4PayrollSystem_23July19_v3;
 // import io.swingtest2.app108.TableDemo4PayrollSystem_23July19_v2;
 
-import Lin.polymorphism.employee.frame.SalariedEmployeeJFrame;
+import Lin.polymorphism.employee.frame.SalariedEmployeeJFrame_V0;
 
 public class Helper4SalariedEmployee extends Helper4SuperEmployeeBase {
 
-    public Helper4SalariedEmployee(/* Component component */SalariedEmployeeJFrame component) {
+    public Helper4SalariedEmployee(/* Component component */SalariedEmployeeJFrame_V0 component) {
         super(component);
-        frameEmployee = (SalariedEmployeeJFrame) component;
+        frameEmployee = (SalariedEmployeeJFrame_V0) component;
     }
 
     @Override
@@ -31,13 +31,13 @@ public class Helper4SalariedEmployee extends Helper4SuperEmployeeBase {
         super.checkInputRecordData();
         if (checkRecord) {
             checkRecord = validationNumber_GUI.checkNumberValueByComparing_iflag(
-                ((SalariedEmployeeJFrame) frameEmployee).txtFieldWeeklySalary.getText(),
+                ((SalariedEmployeeJFrame_V0) frameEmployee).txtFieldWeeklySalary.getText(),
                 EmployeeRecordIndices.WEEKLY_SALARY.getRecordIndexType(), 0, 1,
                 NumberType_MenuOption.DOUBLE_NUMBER_TYPE.getValueIndex());
         }
 
         if (!checkRecord)
-            ((SalariedEmployeeJFrame) frameEmployee).txtFieldWeeklySalary.setText("");
+            ((SalariedEmployeeJFrame_V0) frameEmployee).txtFieldWeeklySalary.setText("");
     } // end checkInputRecordData()
 
     /**
@@ -47,7 +47,8 @@ public class Helper4SalariedEmployee extends Helper4SuperEmployeeBase {
     public void getInputDataReady(boolean _checkRecord) {
         super.getInputDataReady(_checkRecord);
         if (_checkRecord) {
-            _weekSalary = Double.parseDouble(((SalariedEmployeeJFrame) frameEmployee).txtFieldWeeklySalary.getText());
+			_weekSalary = Double
+					.parseDouble(((SalariedEmployeeJFrame_V0) frameEmployee).txtFieldWeeklySalary.getText());
         }
     }
 
